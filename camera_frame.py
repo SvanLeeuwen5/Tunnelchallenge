@@ -1,10 +1,26 @@
 from PyQt6.QtWidgets import QGridLayout, QFrame, QLabel, QVBoxLayout, QSlider
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
+from font import FontLabel
 import vlc
 
+"""
 
+Toestandsvariabelen​                Commando’s​
 
+#identificatie_code​                SetPan(p)​
+#pan_stand​                         SetTilt(t)​
+#tilt_stand​                        SetZoom(z)​
+#zoom_stand​                        SetIdentificatiecode(ic)​
+#focus_stand​                       SelectCameraActueelBeeld(k)​
+#diafragma_stand​                   UnselectCameraActueelBeeld(k)​
+"""
+
+#TODO 
+#Data halen van simulatie
+#Data sturen naar de simulatie 
+
+#Echte video beelden tonen
 #http://77.173.76.238:8090/Camera_01.webm
 #http://77.173.76.238:8090/Camera_02.webm
 #http://77.173.76.238:8090/Camera_03.webm
@@ -21,34 +37,35 @@ class Slider(QSlider):
 class CameraPanel(QFrame):
     def __init__(self, camera_number):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #2c2c2c;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;border : 1px solid black;}")
         self.setContentsMargins(10,10,10,10)
         self.layout = QVBoxLayout()
         self.layout.setSpacing(10)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
-        self.camera_label = QLabel(camera_number)
+        self.camera_label = FontLabel(camera_number, 20, True)
+        self.camera_label.setStyleSheet("QLabel {color : #b2b2b2; background-color: #30393c; border : none}")
         self.camera_label.setMaximumHeight(30)
-        self.camera_label.setFont(QFont("Nirmala UI", 20))
         self.options_frame = QFrame()
         self.options_layout = QGridLayout()
         self.options_frame.setLayout(self.options_layout)
+        self.options_frame.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c; border : none}")
         
         self.option_slider_pan = Slider(0, 360, 10)
-        self.option_label_pan = QLabel(f'Pan { self.option_slider_pan.value() }')
+        self.option_label_pan = FontLabel(f'Pan { self.option_slider_pan.value() }', 12, False)
         self.option_slider_pan.valueChanged.connect(self.updateLabel)
         
         self.option_slider_tilt = Slider(-90, 90, 10)
-        self.option_label_tilt = QLabel(f'Tilt { self.option_slider_tilt.value() }')
+        self.option_label_tilt = FontLabel(f'Tilt { self.option_slider_tilt.value() }', 12, False)
         self.option_slider_tilt.valueChanged.connect(self.updateLabel)
         
         self.option_slider_zoom = Slider(10, 45 , 1)
-        self.option_label_zoom = QLabel(f'Zoom { self.option_slider_zoom.value() }')
+        self.option_label_zoom = FontLabel(f'Zoom { self.option_slider_zoom.value() }', 12, False)
         self.option_slider_zoom.valueChanged.connect(self.updateLabel)
         
         self.option_slider_preset = Slider(0, 8, 1)
-        self.option_label_preset = QLabel(f'Preset { self.option_slider_preset.value() }')
+        self.option_label_preset = FontLabel(f'Preset { self.option_slider_preset.value() }', 12, False)
         self.option_slider_preset.valueChanged.connect(self.updateLabel)
 
         self.options_layout.addWidget(self.option_label_pan,0,0)
@@ -68,18 +85,14 @@ class CameraPanel(QFrame):
         self.option_label_tilt.setText(f'Tilt { self.option_slider_tilt.value() }')
         self.option_label_zoom.setText(f'Zoom { self.option_slider_zoom.value() }')
         self.option_label_preset.setText(f'Preset { self.option_slider_preset.value() }')
-
-        #TODO Sturen naar de simulatie 
-
-        
     
 class ControlPanel(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #2c2c2c;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #000000;border: none}")
         self.setContentsMargins(0, 0, 0, 0)
         self.layout = QGridLayout()
-        self.layout.setSpacing(0)
+        self.layout.setSpacing(10)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
         self.addFrames()
@@ -103,8 +116,7 @@ class VideoFrame(QFrame):
         self.layout.setSpacing(0)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
-        self.camera_label = QLabel(camera)
-        self.camera_label.setFont(QFont("Nirmala UI", 20))
+        self.camera_label = FontLabel(camera, 20, True)
         self.camera_label.setMaximumHeight(50)
         self.camera = VideoPlayer(url)
         self.layout.addWidget(self.camera_label)
@@ -121,12 +133,13 @@ class VideoPlayer(QFrame):
         self.mediaplayer.set_hwnd(int(self.winId()))
         self.mediaplayer.play()
         self.mediaplayer.audio_set_volume(0)
+        
 
 class CameraFrame(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #2c2c2c;}")
-        self.setContentsMargins(50,30,50,30)
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #000000;}")
+        self.setContentsMargins(10,10,10,10)
         self.layout = QGridLayout()
         self.layout.setSpacing(10)
         self.layout.setContentsMargins(0,0,0,0)

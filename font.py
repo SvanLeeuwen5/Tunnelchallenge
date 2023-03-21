@@ -7,4 +7,5 @@ class FontLabel(QLabel):
         font = QFont("Nirmala UI", size)
         font.setBold(bold)
         self.setFont(font)  
+        self.setStyleSheet("QLabel {color : #b2b2b2; background-color: #2c2c2c; border : none}")
         

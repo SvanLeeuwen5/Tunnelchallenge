@@ -19,7 +19,7 @@ class MenuButton(QPushButton):
         if e.type() == QEvent.Type.HoverEnter:
             if self.active == False:
                 self.setIcon(QIcon(self.button_icon+"_hover.svg"))
-                self.setStyleSheet("QPushButton {color : #2d7591; background-color: #3c3c3c; border : none }")	
+                self.setStyleSheet("QPushButton {color : #0078d7; background-color: #3c3c3c; border : none }")	
         if e.type() == QEvent.Type.HoverLeave: 
             if self.active == False:   
                 self.setIcon(QIcon(self.button_icon+".svg"))
@@ -30,7 +30,7 @@ class MenuButton(QPushButton):
         if bool:
             self.active = True
             self.setIcon(QIcon(self.button_icon+"_hover.svg"))
-            self.setStyleSheet("QPushButton { border-left : 3px solid  #2d7591; margin-right : 3px ;}")
+            self.setStyleSheet("QPushButton { border-left : 3px solid  #0078d7; margin-right : 3px ;}")
         else:
             self.active = False
             self.setStyleSheet("QPushButton { }")
