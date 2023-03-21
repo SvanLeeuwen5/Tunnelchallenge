@@ -38,7 +38,7 @@ class CameraPanel(QFrame):
     def __init__(self, camera_number):
         super().__init__()
         self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;border : 1px solid black;}")
-        self.setContentsMargins(10,10,10,10)
+        self.setContentsMargins(20,10,20,10)
         self.layout = QVBoxLayout()
         self.layout.setSpacing(10)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -48,7 +48,10 @@ class CameraPanel(QFrame):
         self.camera_label.setStyleSheet("QLabel {color : #b2b2b2; background-color: #30393c; border : none}")
         self.camera_label.setMaximumHeight(30)
         self.options_frame = QFrame()
+        self.options_frame.setContentsMargins(0,0,0,0)
         self.options_layout = QGridLayout()
+        self.options_layout.setSpacing(0)
+        self.options_layout.setContentsMargins(0,0,0,0)
         self.options_frame.setLayout(self.options_layout)
         self.options_frame.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c; border : none}")
         
@@ -89,7 +92,7 @@ class CameraPanel(QFrame):
 class ControlPanel(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #000000;border: none}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #000000;border-radius: 5px;}")
         self.setContentsMargins(0, 0, 0, 0)
         self.layout = QGridLayout()
         self.layout.setSpacing(10)
@@ -126,7 +129,7 @@ class VideoPlayer(QFrame):
     def __init__(self, url):
         super(VideoPlayer, self).__init__()
         # Create a basic vlc instance
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #000000;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #000000;border-radius: 5px;}")
         self.instance = vlc.Instance('--verbose 2'.split())
         self.mediaplayer = self.instance.media_player_new()
         self.mediaplayer.set_mrl(url)
@@ -147,9 +150,9 @@ class CameraFrame(QFrame):
         self.addFrames()
 
     def addFrames(self):
-        self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
-        self.camera2 = VideoFrame("Camera 2", "https://dl6.webmfiles.org/elephants-dream.webm")
-        self.camera3 = VideoFrame("Camera 3", "https://dl6.webmfiles.org/elephants-dream.webm")
+        #self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
+        #self.camera2 = VideoFrame("Camera 2", "https://dl6.webmfiles.org/elephants-dream.webm")
+        #self.camera3 = VideoFrame("Camera 3", "https://dl6.webmfiles.org/elephants-dream.webm")
         self.controlpanel = ControlPanel()
 
         self.layout.setColumnStretch(0,1)
@@ -157,7 +160,7 @@ class CameraFrame(QFrame):
         self.layout.setRowStretch(0,1)
         self.layout.setRowStretch(1,1)
 
-        self.layout.addWidget(self.camera1,0,0)
-        self.layout.addWidget(self.camera2,0,1)
-        self.layout.addWidget(self.camera3,1,0)
+        #self.layout.addWidget(self.camera1,0,0)
+        #self.layout.addWidget(self.camera2,0,1)
+        #self.layout.addWidget(self.camera3,1,0)
         self.layout.addWidget(self.controlpanel,1,1)

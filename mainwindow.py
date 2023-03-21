@@ -4,6 +4,7 @@ from PyQt6.QtGui import QFont, QMouseEvent
 from menu_frame import Menu
 from camera_frame import CameraFrame
 from dashboard_frame import DashboardFrame
+from login_frame import LoginFrame
 
 
 class mainwindow(QWidget):
@@ -33,21 +34,33 @@ class mainwindow(QWidget):
     def addPages(self):
         self.menu = Menu(self)
         self.camera_window = CameraFrame()
+        self.login_window = LoginFrame(self)
         self.dashboard_window = DashboardFrame(self)
         
         self.mainwindow_layout.addWidget(self.menu, 0, 0)
         self.mainwindow_layout.addWidget(self.camera_window, 0, 1)
         self.mainwindow_layout.addWidget(self.dashboard_window, 0, 1)
+        self.mainwindow_layout.addWidget(self.login_window, 0, 1)
 
     def connectButtons(self):
         self.menu.button_dashboard.clicked.connect(self.dashboardActive)
         self.menu.button_camera.clicked.connect(self.cameraActive)
+        self.menu.button_logout.clicked.connect(self.loginActive)
+
+    def loginActive(self):
+        self.login_window.show()
+        self.menu.button_dashboard.contentActive(False)
+        self.menu.button_camera.contentActive(False)
+        self.dashboard_window.hide()
+        self.menu.hide()
+        self.camera_window.hide()
 
     def dashboardActive(self):
         self.menu.button_dashboard.contentActive(True)
         self.menu.button_camera.contentActive(False)
         self.dashboard_window.show()
         self.camera_window.hide()
+        self.login_window.hide()
 
     def cameraActive(self):
         self.menu.button_dashboard.contentActive(False)

@@ -30,28 +30,28 @@ Toestandsvariabelen​                            Commando's​
 class MeldingLijst(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;}")  
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c; border-radius: 5px;}")  
 
 class SystemenDetecties(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;border-radius: 5px;}")
 
 
 class OverzichtsPlattegrond(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #859faa;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #859faa;border-radius: 5px;}")
 
 class PrimaireBediening(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #859faa;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #859faa;border-radius: 5px;}")
 
 class DetailPlattegrond(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;}")
+        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;border-radius: 5px;}")
 
 
 class DashboardFrame(QFrame):
