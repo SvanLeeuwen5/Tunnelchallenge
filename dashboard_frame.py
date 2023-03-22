@@ -10,7 +10,7 @@ from font import FontLabel
 Toestandsvariabelen                          Commando’s​
 
 #richting: aflopend | oplopend                 SetAutoregeling(aan | uit)​
-#niveau: percentage                            SetStand(0..8)​
+#niveau: percentage                            SetStand(0..10)​
 #capaciteit_beschikbaar: percentage
 #branduren: uren
 """
@@ -39,6 +39,7 @@ class SystemenDetectiesDetails(QFrame):
         self.setContentsMargins(0,0,0,0)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)    
+        self.setMinimumWidth(300)
 
 class SystemenDetectieButton(QPushButton):
     def __init__(self, text):
@@ -62,9 +63,9 @@ class SystemenDetectiesFoldDetails(QFrame):
 class SystemenDetectieFoldButton(QFrame):
     def __init__(self, text):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #000000; background-color: #4c575b; border : 0px; border-bottom : 1px solid #000000; border-radius: 0px;}"
+        self.setStyleSheet("QFrame {color : #000000; background-color: #4c575b; border : 0px; border-bottom : 1px solid #000000;border-top : 2px solid #000000; border-radius: 0px;}"
                            "QPushButton {color : #000000; background-color: #4c575b; text-align: left; border : 0px;}"
-                           "QLabel {color : #000000; background-color: #4c575b; border: 0px; border-bottom : 1px solid #000000; }")
+                           "QLabel {color : #000000; background-color: #4c575b; border: 0px; border-bottom : 1px solid #000000; border-top : 2px solid #000000;}")
         self.setContentsMargins(0,0,0,0)
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
@@ -75,13 +76,13 @@ class SystemenDetectieFoldButton(QFrame):
         self.button.setIcon(QIcon("icons/caret-right.svg"))
         self.button.setMinimumWidth(100)
         self.icon1 = QLabel("")
-        self.icon1.setPixmap(QIcon("icons/circle.svg").pixmap(16,16))
+        self.icon1.setPixmap(QIcon("icons/circle.svg").pixmap(15,15))
         self.icon1.setFixedSize(20,20)
         self.icon2 = QLabel("")
-        self.icon2.setPixmap(QIcon("icons/square.svg").pixmap(16,16))
+        self.icon2.setPixmap(QIcon("icons/square.svg").pixmap(15,15))
         self.icon2.setFixedSize(20,20)
         self.icon3 = QLabel("")
-        self.icon3.setPixmap(QIcon("icons/triangle.svg").pixmap(16,16))
+        self.icon3.setPixmap(QIcon("icons/triangle.svg").pixmap(15,15))
         self.icon3.setFixedSize(20,20)
         self.horizontalSpacer = QSpacerItem(0,0,QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Minimum)
         self.layout.addWidget(self.button)
@@ -178,7 +179,7 @@ class SystemenDetectiesList(QFrame):
 class SystemenDetectiesFrame(QFrame):
     def __init__(self):
         super().__init__()
-        self.setContentsMargins(0,10,0,10)
+        self.setContentsMargins(10,10,10,10)
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
         self.layout.setContentsMargins(0,0,0,0)
@@ -225,11 +226,6 @@ class PrimaireBediening(QFrame):
         super().__init__()
         self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #859faa;border-radius: 5px;}")
 
-class DetailPlattegrond(QFrame):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #30393c;border-radius: 5px;}")
-
 
 class DashboardFrame(QFrame):
     def __init__(self,parent):
@@ -244,13 +240,11 @@ class DashboardFrame(QFrame):
 
     def addFrames(self):
         self.primaire_bedieing = PrimaireBediening()
-        self.detail_plattegrond = DetailPlattegrond()
         self.overzichts_plattegrond = OverzichtsPlattegrond()
         self.melding_lijst = MeldingLijst()
         self.systemen_detecties = SystemenDetecties()
 
         self.layout.addWidget(self.primaire_bedieing, 0, 0)
         self.layout.addWidget(self.overzichts_plattegrond, 0, 1)
-        self.layout.addWidget(self.detail_plattegrond, 2, 1)
         self.layout.addWidget(self.melding_lijst, 1, 1)
-        self.layout.addWidget(self.systemen_detecties, 1, 0, 2, 1)
+        self.layout.addWidget(self.systemen_detecties, 1, 0)
