@@ -34,6 +34,8 @@ class LoginFrame(QFrame):
         self.user_status = FontLabel(' ', 12, False)
         password_label = FontLabel('Wachtwoord:', 12, False)   
         self.password_status = FontLabel(' ', 12, False) 
+        self.password_status.setStyleSheet("QLabel {color : #aa1d1d;}")
+        self.user_status.setStyleSheet("QLabel {color : #aa1d1d;}")
         self.username_input = QLineEdit()
         self.username_input.setPlaceholderText('Gebruiker')
         self.password_input = QLineEdit()  
@@ -53,6 +55,8 @@ class LoginFrame(QFrame):
         self.login_layout.addWidget(self.login_button,7,5,1,2,Qt.AlignmentFlag.AlignRight)
 
     def checkLogin(self):
+        self.password_status.setText('')
+        self.user_status.setText('')
         if self.username_input.text() == 'user':
             if self.password_input.text() == 'user':
                 self.parent.menu.show()
