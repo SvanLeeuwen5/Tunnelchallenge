@@ -1,7 +1,35 @@
-from PyQt6.QtWidgets import QFrame, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout,QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem
+from PyQt6.QtWidgets import QFrame, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout,QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem, QStyleOptionViewItem
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from font import FontLabel
+
+#refactor the following class
+
+class MeldingLijstTableItem(QTableWidgetItem):
+    def __init__(self, text):
+        super(MeldingLijstTableItem, self).__init__(text)
+        self.setFlags(self.flags() & ~Qt.ItemFlag.ItemIsEditable)
+        self.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+        if text == "square":
+            self.setText("")
+            self.setIcon(QIcon('icons/square.svg'))
+        if text == "triangle":
+            self.setText("")
+            self.setIcon(QIcon('icons/triangle.svg'))
+        if text == "circle":
+            self.setText("")
+            self.setIcon(QIcon('icons/circle.svg'))
+          
+class MeldingLijstTableTable(QTableWidget):
+    def __init__(self):
+        super().__init__()
+        self.setColumnCount(7)
+        self.setHorizontalHeaderLabels(["Type", "Cam ", "Tijdstip", "Locatie", "Melding", "Ond", "Notitie"])
+        horizontal_header = QHeaderView(Qt.Orientation.Horizontal)
+        self.setHorizontalHeader(horizontal_header)
+        self.verticalHeader().hide()
+        horizontal_header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        horizontal_header.setStretchLastSection(True)
 
 class MeldingLijstTableFrame(QFrame):
     def __init__(self):
@@ -9,34 +37,35 @@ class MeldingLijstTableFrame(QFrame):
         self.itemCount = 0
         table_layout = QVBoxLayout()
         self.setLayout(table_layout)
-
-        self.table = QTableWidget()
+        self.table = MeldingLijstTableTable()
         self.setStyleSheet( "QTableView {color : #b2b2b2; background-color: #4c575b;}"
                             "QHeaderView::section {color : #b2b2b2; background-color: #4c575b;}"
                             "QHeaderView::section:horizontal {color : #b2b2b2; background-color: #4c575b;}")
 
-        self.table.setColumnCount(7)
-        self.table.setHorizontalHeaderLabels(["Type", "Cam ", "Tijdstip", "Locatie", "Melding", "Ond", "Notitie"])
-        
-        horizontal_header = QHeaderView(Qt.Orientation.Horizontal)
-        self.table.setHorizontalHeader(horizontal_header)
-        self.table.verticalHeader().hide()
-        horizontal_header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
-        horizontal_header.setStretchLastSection(True)
-
-        self.newItem()
-        self.newItem()
-        self.newItem()
+        self.newItem("circle", "18", "28-10-11 16:11:00", "Rijbaan 1", "SOS", "", "")
+        self.newItem("triangle", "18", "28-10-11 16:11:00", "Rijbaan 1", "SOS", "", "")
+        self.newItem("square", "18", "28-10-11 16:11:00", "Rijbaan 1", "SOS", "", "")
         table_layout.addWidget(self.table)
 
     #TODO Add a new item to the table with actual data
 
-    def newItem(self):
+    def newItem(self, type, cam , tijdstip, locatie, melding, ond, notitie):
         self.table.insertRow(0)
-        for j in range(self.table.columnCount()):
-            item = QTableWidgetItem(f"Row {self.itemCount}, Col {j}")
-            item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
-            self.table.setItem(0, j, item)
+        item = MeldingLijstTableItem(type)
+
+        self.table.setItem(0, 0, item)
+        item = MeldingLijstTableItem(cam)
+        self.table.setItem(0, 1, item)
+        item = MeldingLijstTableItem(tijdstip)
+        self.table.setItem(0, 2, item)
+        item = MeldingLijstTableItem(locatie)
+        self.table.setItem(0, 3, item)
+        item = MeldingLijstTableItem(melding)
+        self.table.setItem(0, 4, item)
+        item = MeldingLijstTableItem(ond)
+        self.table.setItem(0, 5, item)
+        item = MeldingLijstTableItem(notitie)
+        self.table.setItem(0, 6, item)
         self.itemCount += 1
 
     def removeItem(self):
