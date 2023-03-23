@@ -151,7 +151,7 @@ class CameraFrame(QFrame):
 
     def addFrames(self):
         #self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
-        #self.camera2 = VideoFrame("Camera 2", "https://dl6.webmfiles.org/elephants-dream.webm")
+        #self.camera2 = VideoFrame("Camera 2", "https://dl6.webmfiles.org/big-buck-bunny_trailer.webm")
         #self.camera3 = VideoFrame("Camera 3", "https://dl6.webmfiles.org/elephants-dream.webm")
         self.controlpanel = ControlPanel()
 

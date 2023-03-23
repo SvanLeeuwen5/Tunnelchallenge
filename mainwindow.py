@@ -23,7 +23,7 @@ class mainwindow(QWidget):
         self.show()   
 
     def initUI(self):
-        self.setGeometry(300, 100, 800, 600)      
+        self.setGeometry(300, 100, 1500, 800)      
 
     def createLayout(self):
         self.mainwindow_layout = QGridLayout()
