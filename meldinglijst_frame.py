@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QGridLayout, QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout, QTabWidget, QHBoxLayout, QApplication, QWidget, QTableView, QHeaderView, QMainWindow, QTableWidget, QTableWidgetItem, QGroupBox, QScrollArea
+from PyQt6.QtWidgets import QFrame, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout,QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from font import FontLabel
@@ -28,6 +28,8 @@ class MeldingLijstTableFrame(QFrame):
         self.newItem()
         self.newItem()
         table_layout.addWidget(self.table)
+
+    #TODO Add a new item to the table with actual data
 
     def newItem(self):
         self.table.insertRow(0)
