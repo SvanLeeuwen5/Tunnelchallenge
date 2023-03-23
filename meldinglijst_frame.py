@@ -72,8 +72,6 @@ class MeldingLijst(QFrame):
         
         self.tabel_lijst = MeldingLijstTableFrame()
         self.buttons = MeldingLijstButtonFrame()
-        self.verticalSpacer = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
 
         self.layout.addWidget(self.buttons)
         self.layout.addWidget(self.tabel_lijst)
-        self.layout.addItem(self.verticalSpacer)
