@@ -37,11 +37,11 @@ class MeldingLijstTableFrame(QFrame):
 
 
 class MeldingLijstButton(QPushButton):
-    def __init__(self, text):
+    def __init__(self, text, icon):
         super().__init__(text)
         self.setStyleSheet("QPushButton {color : #b2b2b2; background-color: #4c575b; border : 1px solid black; border-radius: 5px;}")
         self.setFixedSize(30,30)
-        self.setIcon(QIcon("icons/check.svg"))
+        self.setIcon(QIcon(icon))
 
 
 class MeldingLijstButtonFrame(QFrame):
@@ -52,11 +52,14 @@ class MeldingLijstButtonFrame(QFrame):
         button_layout = QHBoxLayout()
         self.setLayout(button_layout)
         meldinglijst_label = FontLabel("Onbevestigde meldingen",14, True)
+
+        button_check = MeldingLijstButton("","icons/check.svg")
+        button_check_all = MeldingLijstButton("","icons/check-double.svg")
+
         button_layout.addWidget(meldinglijst_label, alignment=Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignBottom)
         button_layout.addItem(self.horizontalSpacer)
-        for i in range(7):
-            button = MeldingLijstButton("")
-            button_layout.addWidget(button)
+        button_layout.addWidget(button_check)
+        button_layout.addWidget(button_check_all)
 
 
 class MeldingLijst(QFrame):
