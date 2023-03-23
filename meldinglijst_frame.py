@@ -42,7 +42,7 @@ class MeldingLijstButton(QPushButton):
         super().__init__(text)
         self.setStyleSheet("QPushButton {color : #b2b2b2; background-color: #4c575b; border : 1px solid black; border-radius: 5px;}")
         self.setFixedSize(30,30)
-        self.setIcon(QIcon("icons/triangle.svg"))
+        self.setIcon(QIcon("icons/check.svg"))
 
 
 class MeldingLijstButtonFrame(QFrame):
