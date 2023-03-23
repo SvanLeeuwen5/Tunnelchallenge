@@ -21,7 +21,7 @@ class MeldingLijstTableFrame(QFrame):
         horizontal_header = QHeaderView(Qt.Orientation.Horizontal)
         self.table.setHorizontalHeader(horizontal_header)
         self.table.verticalHeader().hide()
-        horizontal_header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
+        horizontal_header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
         horizontal_header.setStretchLastSection(True)
 
         self.newItem()
