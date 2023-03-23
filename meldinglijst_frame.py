@@ -27,10 +27,9 @@ class MeldingLijstTableFrame(QFrame):
         # Data aan tabel toevoegen (random bijgedaan)
         for i in range(self.table.rowCount()):
             for j in range(self.table.columnCount()):
-                self.table.setItem(i, j, QTableWidgetItem(f"Row {i}, Col {j}"))
-
-
-
+                item = QTableWidgetItem(f"Row {i}, Col {j}")
+                item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                self.table.setItem(i, j, item)
         table_layout.addWidget(self.table)
 
         
