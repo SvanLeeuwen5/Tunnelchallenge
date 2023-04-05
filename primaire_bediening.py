@@ -10,12 +10,9 @@ class Rijbaan(QFrame):  #Tekst Rijbaan
 
         self.layout = QHBoxLayout()
         self.setLayout(self.layout)
-        label = QLabel("Rijbaan 1  ________________________________________________")
-        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
+        label = QLabel("Rijbaan 1")
+        label.setStyleSheet("border-bottom : 1px solid white ; border-radius : 0px ; padding-bottom : 4px" )
         self.layout.addWidget(label)
-        self.layout.addItem(self.verticalstrech)
-
-
     
 class Button(QPushButton):
     def __init__(self, text, icon=None, menu=None):
@@ -40,7 +37,7 @@ class Verkeerslichtknop(Button):
         super().__init__("", icon)
 
 
-class VerkeerslichtMenu(Menu):
+class VerkeerslichtMenu(QMenu):
     def __init__(self, groen, rood):
         super().__init__()
 
@@ -126,10 +123,13 @@ class Blokbedieningen(QFrame):
         
         self.rijbaan_nummer = Rijbaan()
         self.bedieningsknoppen = Bedieningen()
+        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
 
-        self.layout = QGridLayout()
+        self.layout = QVBoxLayout()
+        
         self.layout.addWidget(self.rijbaan_nummer)
         self.layout.addWidget(self.bedieningsknoppen)
+        self.layout.addItem(self.verticalstrech)
         self.setLayout(self.layout)
 
 
