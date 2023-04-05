@@ -5,8 +5,6 @@ from menu_frame import Menu
 from camera_frame import CameraFrame
 from dashboard_frame import DashboardFrame
 from login_frame import LoginFrame
-from data_parse import DataParse
-
 
 class mainwindow(QWidget):
     """
