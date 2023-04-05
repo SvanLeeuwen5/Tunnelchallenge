@@ -53,7 +53,7 @@ class Bedieningen(QFrame):
         self.h_layout = QHBoxLayout()
         self.h_layout.setSpacing(20)
 
-        self.button1 = Button("", "icons/red_exclamation_point.svg")
+        self.button1 = Button("", "icons/alert-triangle.svg")
         
         self.button2 = Button("Bedrijf")
         self.button2.setMenu(Menu())
@@ -91,9 +91,9 @@ class Bedieningen(QFrame):
     def change_button_text(self):
         sender = self.sender()
         if sender == self.button5:
-            self.button3.setText("Open")
+            self.button3.setText("Opened")
         elif sender == self.button6:
-            self.button3.setText("Close")
+            self.button3.setText("Closed")
 
 
     def roodlicht(self):
