@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import QGridLayout, QFrame
 from systemen_detecties_frame import SystemenDetecties
 from meldinglijst_frame import MeldingLijst
 from primaire_bediening import PrimaireBediening
+from overzichts_plattegrond import OverzichtsPlattegrond
 
 #   TODO
 #   Afsluitbomen
@@ -27,11 +28,6 @@ Toestandsvariabelen                            Commando's
 #   Verkeerslichten
 
 #   MTM Borden
-
-class OverzichtsPlattegrond(QFrame):
-    def __init__(self):
-        super().__init__()
-        self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #859faa;border-radius: 5px;}")
 
 class DashboardFrame(QFrame):
     def __init__(self,parent):
