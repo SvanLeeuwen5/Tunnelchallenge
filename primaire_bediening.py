@@ -142,6 +142,7 @@ class PrimaireBediening(QFrame):
         self.setContentsMargins(10,10,10,10)
         self.setStyleSheet("QFrame {color : #ffffff; background-color: #859faa; border-radius: 5px;}")
         self.layout = QVBoxLayout()
+        self.setMaximumWidth(600)
         self.setLayout(self.layout)
 
         self.rijbaan1Bediening = Blokbedieningen("Rijbaan 1")

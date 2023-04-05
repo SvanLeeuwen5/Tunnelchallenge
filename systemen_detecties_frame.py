@@ -348,7 +348,7 @@ class SystemenDetecties(QTabWidget):
                             "QTabWidget::pane { border: 1px}")
         self.setTabPosition(QTabWidget.TabPosition.West)
         self.setTabIcon(1, QIcon("icons/square.svg"))
-        self.setFixedWidth(600)
+        self.setMaximumWidth(600)
         self.rijbaan1 = SystemenDetectiesFrame()
 
         self.addTab(self.rijbaan1, "Rijbaan 1")
