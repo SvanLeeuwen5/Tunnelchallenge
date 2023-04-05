@@ -1,0 +1,86 @@
+Slagbomen
+----------------------------------------------------------------------------------------------------
+Commando
+0 = Geen
+1 = Neer
+2 = Op
+3 = Stop (lx per beweging)
+
+Stand               Beschikbaar         Beweging        Obstakel        Storing
+0 = Undefined       0 = Ja              0 = Geen        0 = Geen        0 = Geen
+1 = Op              1 = Nee             1 = Op          1 = Ja          1 = STORING_OBSTAKELDET.                                                 
+2 = Op verlaten                         2 = Neer
+3 = Neer
+
+Verlichting
+----------------------------------------------------------------------------------------------------
+SetStand            SetAuto
+0 = 0%              0 = Aan             
+1 = 10%             1 = Uit
+...
+9 = 90%
+10 = 100%
+
+Niveau              Capaciteit          Energieverbruik     Branduren
+0t/m100 = 0...100%  0t/m100 = 0...100%  Integer (kW)        Integer (minuten)
+
+SOS
+----------------------------------------------------------------------------------------------------
+Onderschrijding     Stilstand           Disabled (1=Ja)     Storing
+0 = Geen detectie   0 = Geen detectie   0 = Geen detectie   0 = Geen detectie    
+1 = Detectie        1 = Detectie        1 = Detectie        1 = Detectie
+
+
+Verkeerslichten
+----------------------------------------------------------------------------------------------------
+Stand               setStand            Beschikbaar         Storing
+0 = Gedoofd         0 = naar rood       0 = Ja              0 = Geen        
+1 = Geel knipper    1 = naar gedoofd    1 = Nee             1 = STORING_ROOD                                                  
+2 = Geel vast                                               2 = STORING_GEEL                            
+3 = Rood                                                    4 - STORING_GEEL_KNIPPER
+
+MTM
+----------------------------------------------------------------------------------------------------
+Commando
+O = Toon niets
+1 = Toon rood kruis
+2 = Toon groene pijl
+3 = Pijl naar links
+4 = Pijl naar rechts
+5 = Einde beperkingen
+6 = Flash on
+7 = Flash uit
+50 = Toon 50
+70 = Toon 70
+80 = Toon 80
+90 = Toon 90
+100 = Toon 100
+
+Stand                           Beschikbaar     Flash               Storing
+O = Bord staat uit              0 = Ja          0 = Geen flash      0 = Nee
+1 = Rood kruis actief           1 = Nee         1 = Wel flash       1 = Ja
+2 = Groene pijl actief
+3 = Pijl naar links actief
+4 = Pijl naar rechts actief
+5 = Einde beperkingen actief
+50 = 50 Wordt getoond
+70 = 70 Wordt getoond
+80 = 80 Wordt getoond
+90 = 90 Wordt getoond
+100 = 100 Wordt getoond
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
