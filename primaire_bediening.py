@@ -32,16 +32,17 @@ class Menu(QMenu):
         self.optie3 = self.addAction("Optie 3")
 
 
-class Verkeerslichtknop(Button):
+class Verkeerslichtknop(QPushButton):
     def __init__(self, icon):
-        super().__init__("", icon)
+        super().__init__()
+        self.setIcon(QIcon(icon))
 
 
 class VerkeerslichtMenu(QMenu):
-    def __init__(self, groen, rood):
+    def __init__(self, gedoofd, rood):
         super().__init__()
 
-        self.zet_groen = self.addAction(QIcon("green_circle.png"), groen)
+        self.zet_gedoofd = self.addAction(QIcon("green_circle.png"), gedoofd)
         self.zet_rood = self.addAction(QIcon("red_circle.png"), rood)
 
 class Bedieningen(QFrame):
@@ -66,10 +67,10 @@ class Bedieningen(QFrame):
 
         self.button6 = Button("Close")
 
-        self.button4 = Verkeerslichtknop("icons/red_circle.svg")
-        self.button4.setMenu(VerkeerslichtMenu("zet groen", "zet rood"))
+        self.button4 = Verkeerslichtknop("icons/circle.svg")
+        self.button4.setMenu(VerkeerslichtMenu("zet gedoofd", "zet rood"))
 
-        self.button4.menu().zet_groen.triggered.connect(self.groenlicht)
+        self.button4.menu().zet_gedoofd.triggered.connect(self.gedoofdlicht)
         self.button4.menu().zet_rood.triggered.connect(self.roodlicht)
 
         self.h_layout.addWidget(self.button1)
@@ -98,8 +99,8 @@ class Bedieningen(QFrame):
     def roodlicht(self):
         print("RED")
 
-    def groenlicht(self):
-        print("GREEN")
+    def gedoofdlicht(self):
+        print("GEDOOFD")
 
     def optie1(self):
         print("Optie 1")
