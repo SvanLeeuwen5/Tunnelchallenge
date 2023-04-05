@@ -5,6 +5,7 @@ from menu_frame import Menu
 from camera_frame import CameraFrame
 from dashboard_frame import DashboardFrame
 from login_frame import LoginFrame
+import sys
 
 class mainwindow(QWidget):
     """
@@ -72,4 +73,4 @@ if __name__ == '__main__':
     app = QApplication([])
     mw = mainwindow()
     mw.move
-    app.exec()
+    sys.exit(app.exec())
