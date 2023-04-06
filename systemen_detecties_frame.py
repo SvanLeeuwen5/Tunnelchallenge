@@ -42,7 +42,7 @@ class SystemenDetectiesDetailsWaardeLabel(QFrame):
     def setWaarde(self, waarde):
         self.waarde.setText(waarde)
 
-class SystemenDetectiesDetailsSet(QFrame):
+class VerlichtingSystemenDetectiesDetailsSet(QFrame):
     def __init__(self):
         super().__init__()
         self.setContentsMargins(0,0,0,0)
@@ -86,7 +86,7 @@ class VerlichtingSystemenDetectiesDetails(SystemenDetectiesDetails):
     def __init__(self,text):
         super().__init__(text)
         self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
-        self.setters = SystemenDetectiesDetailsSet()
+        self.setters = VerlichtingSystemenDetectiesDetailsSet()
         self.niveau = SystemenDetectiesDetailsWaardeLabel("Niveau")
         self.capaciteit = SystemenDetectiesDetailsWaardeLabel("Capaciteit")
         self.energieverbruik = SystemenDetectiesDetailsWaardeLabel("Energieverbruik")
@@ -98,6 +98,55 @@ class VerlichtingSystemenDetectiesDetails(SystemenDetectiesDetails):
         self.layout.addWidget(self.capaciteit)
         self.layout.addWidget(self.energieverbruik)
         self.layout.addWidget(self.branduren)
+        self.layout.addItem(self.verticalstrech)
+
+
+class SlagboomSystemenDetectiesDetails(SystemenDetectiesDetails):
+    def __init__(self,text):
+        super().__init__(text)
+        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
+        self.state = SystemenDetectiesDetailsWaardeLabel("State")
+        self.beschikbaarheid = SystemenDetectiesDetailsWaardeLabel("Beschikbaarheid")
+        self.movement = SystemenDetectiesDetailsWaardeLabel("Movement")
+        self.obstacle = SystemenDetectiesDetailsWaardeLabel("Obstacle")
+        self.error = SystemenDetectiesDetailsWaardeLabel("Error")
+        self.error.setStyleSheet("QFrame {padding-left : 10px; padding-right : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px;border-bottom : 2px solid black;}"
+                                  "FontLabel {padding : 2px; color : #b2b2b2; background-color: #4c575b; border : 0px;}")
+        self.layout.addWidget(self.state)
+        self.layout.addWidget(self.beschikbaarheid)
+        self.layout.addWidget(self.movement)
+        self.layout.addWidget(self.obstacle)
+        self.layout.addWidget(self.error)
+        self.layout.addItem(self.verticalstrech)
+
+class VerkeerslichtSystemenDetectiesDetails(SystemenDetectiesDetails):
+    def __init__(self,text):
+        super().__init__(text)
+        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
+        self.state = SystemenDetectiesDetailsWaardeLabel("State")
+        self.beschikbaarheid = SystemenDetectiesDetailsWaardeLabel("Beschikbaarheid")
+        self.error = SystemenDetectiesDetailsWaardeLabel("Error")
+        self.error.setStyleSheet("QFrame {padding-left : 10px; padding-right : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px;border-bottom : 2px solid black;}"
+                                  "FontLabel {padding : 2px; color : #b2b2b2; background-color: #4c575b; border : 0px;}")
+        self.layout.addWidget(self.state)
+        self.layout.addWidget(self.beschikbaarheid)
+        self.layout.addWidget(self.error)
+        self.layout.addItem(self.verticalstrech)
+
+class SensorSystemenDetectiesDetails(SystemenDetectiesDetails):
+    def __init__(self,text):
+        super().__init__(text)
+        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
+        self.state = SystemenDetectiesDetailsWaardeLabel("State")
+        self.CO = SystemenDetectiesDetailsWaardeLabel("CO")
+        self.CO2 = SystemenDetectiesDetailsWaardeLabel("CO2")
+        self.error = SystemenDetectiesDetailsWaardeLabel("Error")
+        self.error.setStyleSheet("QFrame {padding-left : 10px; padding-right : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px;border-bottom : 2px solid black;}"
+                                  "FontLabel {padding : 2px; color : #b2b2b2; background-color: #4c575b; border : 0px;}")
+        self.layout.addWidget(self.state)
+        self.layout.addWidget(self.CO)
+        self.layout.addWidget(self.CO2)
+        self.layout.addWidget(self.error)
         self.layout.addItem(self.verticalstrech)
 
 
@@ -165,25 +214,19 @@ class SystemenDetectiesFoldDetailsBuis(SystemenDetectiesFoldDetails):
         self.button_verlichting = SystemenDetectieButton("Verlichting")
         self.layout.addWidget(self.button_verlichting) 
 
-class SystemenDetectiesFoldDetailsDetecties(SystemenDetectiesFoldDetails):
+class SystemenDetectiesFoldDetailsVerkeer(SystemenDetectiesFoldDetails):
     def __init__(self):
         super().__init__()
-        self.button_onderschrijding = SystemenDetectieButton("Onderschrijding")
-        self.button_stilstand = SystemenDetectieButton("Stilstand")
-        self.button_storing = SystemenDetectieButton("Storing")
-        self.layout.addWidget(self.button_onderschrijding)   
-        self.layout.addWidget(self.button_stilstand)
-        self.layout.addWidget(self.button_storing)
+        self.button_slagboom = SystemenDetectieButton("Slagboom")
+        self.button_verkeerslicht = SystemenDetectieButton("Verkeerslicht")
+        self.layout.addWidget(self.button_slagboom)   
+        self.layout.addWidget(self.button_verkeerslicht)
 
 class SystemenDetectiesFoldDetailsSensoren(SystemenDetectiesFoldDetails):
     def __init__(self):
         super().__init__()
-        self.button_sensor1 = SystemenDetectieButton("IDK")
-        self.button_sensor2 = SystemenDetectieButton("WELKE")
-        self.button_sensor3 = SystemenDetectieButton("SENSOREN")
+        self.button_sensor1 = SystemenDetectieButton("Luchtsensor")
         self.layout.addWidget(self.button_sensor1)   
-        self.layout.addWidget(self.button_sensor2)
-        self.layout.addWidget(self.button_sensor3)
 
 class SystemenDetectieFoldButton(QFrame):
     def __init__(self, text):
@@ -250,9 +293,9 @@ class SystemenDetectiesList(QFrame):
         self.fold_button_buis = SystemenDetectieFoldButton("Buis")
         self.fold_button_buis.button.clicked.connect(self.buisActive)        
         self.fold_details_buis = SystemenDetectiesFoldDetailsBuis()
-        self.fold_button_detecties= SystemenDetectieFoldButton("Detecties")
-        self.fold_button_detecties.button.clicked.connect(self.detectiesActive)
-        self.fold_details_detecties = SystemenDetectiesFoldDetailsDetecties()
+        self.fold_button_verkeer= SystemenDetectieFoldButton("Verkeer")
+        self.fold_button_verkeer.button.clicked.connect(self.verkeerActive)
+        self.fold_details_verkeer = SystemenDetectiesFoldDetailsVerkeer()
         self.fold_button_sensoren= SystemenDetectieFoldButton("Sensoren")
         self.fold_button_sensoren.button.clicked.connect(self.sensorenActive)
         self.fold_details_sensoren = SystemenDetectiesFoldDetailsSensoren()        
@@ -260,14 +303,14 @@ class SystemenDetectiesList(QFrame):
 
         self.layout.addWidget(self.fold_button_buis)
         self.layout.addWidget(self.fold_details_buis)
-        self.layout.addWidget(self.fold_button_detecties)
-        self.layout.addWidget(self.fold_details_detecties)
+        self.layout.addWidget(self.fold_button_verkeer)
+        self.layout.addWidget(self.fold_details_verkeer)
         self.layout.addWidget(self.fold_button_sensoren)
         self.layout.addWidget(self.fold_details_sensoren)
         self.layout.addItem(self.verticalstrech)
 
         self.fold_details_buis.hide()
-        self.fold_details_detecties.hide()
+        self.fold_details_verkeer.hide()
         self.fold_details_sensoren.hide()
 
     def buisActive(self):
@@ -280,15 +323,15 @@ class SystemenDetectiesList(QFrame):
             self.fold_button_buis.folded = True
             self.fold_details_buis.hide()
 
-    def detectiesActive(self):
-        if self.fold_button_detecties.folded:
-            self.fold_button_detecties.button.setIcon(QIcon("icons/caret-down.svg"))
-            self.fold_button_detecties.folded = False
-            self.fold_details_detecties.show()
+    def verkeerActive(self):
+        if self.fold_button_verkeer.folded:
+            self.fold_button_verkeer.button.setIcon(QIcon("icons/caret-down.svg"))
+            self.fold_button_verkeer.folded = False
+            self.fold_details_verkeer.show()
         else:
-            self.fold_button_detecties.button.setIcon(QIcon("icons/caret-right.svg"))
-            self.fold_button_detecties.folded = True
-            self.fold_details_detecties.hide()
+            self.fold_button_verkeer.button.setIcon(QIcon("icons/caret-right.svg"))
+            self.fold_button_verkeer.folded = True
+            self.fold_details_verkeer.hide()
 
     def sensorenActive(self):
         if self.fold_button_sensoren.folded:
@@ -312,27 +355,15 @@ class SystemenDetectiesFrame(QFrame):
         self.horizontalstretch = QSpacerItem(0,0,QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Minimum)
         self.systemen_detecties_list = SystemenDetectiesList()
         self.verlichting_details = VerlichtingSystemenDetectiesDetails("Verlichting")
-        self.onderschrijding_details = SystemenDetectiesDetails("Onderschrijding")
-        self.stilstand_details = SystemenDetectiesDetails("Stilstand")
-        self.storing_details = SystemenDetectiesDetails("Storing")
+        self.slagboom_details = SlagboomSystemenDetectiesDetails("Slagboom")
+        self.verkeerslicht_details = VerkeerslichtSystemenDetectiesDetails("Verkeerslicht")
+        self.sensor1_details = SensorSystemenDetectiesDetails("Luchtsensor")
 
-        #TODO
-        self.sensor1_details = SystemenDetectiesDetails("Sensor1")
-        self.sensor2_details = SystemenDetectiesDetails("Sensor2")
-        self.sensor3_details = SystemenDetectiesDetails("Sensor3")
- 
-        
         self.layout.addWidget(self.systemen_detecties_list)
         self.layout.addWidget(self.verlichting_details)
-        self.layout.addWidget(self.onderschrijding_details)
-        self.layout.addWidget(self.stilstand_details)
-        self.layout.addWidget(self.storing_details)
-
-        #TODO
+        self.layout.addWidget(self.slagboom_details)
+        self.layout.addWidget(self.verkeerslicht_details)
         self.layout.addWidget(self.sensor1_details)
-        self.layout.addWidget(self.sensor2_details)
-        self.layout.addWidget(self.sensor3_details)
-
         self.layout.addItem(self.horizontalstretch)
 
 
@@ -360,28 +391,21 @@ class SystemenDetecties(QTabWidget):
 
     def connectButtons(self):
         self.rijbaan1.systemen_detecties_list.fold_details_buis.button_verlichting.button.clicked.connect(self.verlichtingActive)
-        self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_onderschrijding.button.clicked.connect(self.onderschrijdingActive)
-        self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_stilstand.button.clicked.connect(self.stilstandActive)
-        self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_storing.button.clicked.connect(self.storingActive)
+        self.rijbaan1.systemen_detecties_list.fold_details_verkeer.button_slagboom.button.clicked.connect(self.slagboomActive)
+        self.rijbaan1.systemen_detecties_list.fold_details_verkeer.button_verkeerslicht.button.clicked.connect(self.verkeerslichtActive)
         self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor1.button.clicked.connect(self.sensor1Active)
-        self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor2.button.clicked.connect(self.sensor2Active)
-        self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor3.button.clicked.connect(self.sensor3Active)
+
     
     def hideDetails(self):
         self.rijbaan1.verlichting_details.hide()
-        self.rijbaan1.onderschrijding_details.hide()
-        self.rijbaan1.stilstand_details.hide()
-        self.rijbaan1.storing_details.hide()
+        self.rijbaan1.slagboom_details.hide()
+        self.rijbaan1.verkeerslicht_details.hide()
         self.rijbaan1.sensor1_details.hide()
-        self.rijbaan1.sensor2_details.hide()
-        self.rijbaan1.sensor3_details.hide()
+
         self.rijbaan1.systemen_detecties_list.fold_details_buis.button_verlichting.setStyleSheet(self.standard_stylesheet)
-        self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_onderschrijding.setStyleSheet(self.standard_stylesheet)
-        self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_stilstand.setStyleSheet(self.standard_stylesheet)
-        self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_storing.setStyleSheet(self.standard_stylesheet)
+        self.rijbaan1.systemen_detecties_list.fold_details_verkeer.button_slagboom.setStyleSheet(self.standard_stylesheet)
+        self.rijbaan1.systemen_detecties_list.fold_details_verkeer.button_verkeerslicht.setStyleSheet(self.standard_stylesheet)
         self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor1.setStyleSheet(self.standard_stylesheet)
-        self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor2.setStyleSheet(self.standard_stylesheet)
-        self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor3.setStyleSheet(self.standard_stylesheet)
 
 
 
@@ -391,23 +415,18 @@ class SystemenDetecties(QTabWidget):
             self.rijbaan1.verlichting_details.show()
             self.rijbaan1.systemen_detecties_list.fold_details_buis.button_verlichting.setStyleSheet(self.clicked_stylesheet)   
 
-    def onderschrijdingActive(self):
+    def slagboomActive(self):
         self.hideDetails()
-        if self.rijbaan1.onderschrijding_details.isVisible() == False:
-            self.rijbaan1.onderschrijding_details.show()
-            self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_onderschrijding.setStyleSheet(self.clicked_stylesheet) 
+        if self.rijbaan1.slagboom_details.isVisible() == False:
+            self.rijbaan1.slagboom_details.show()
+            self.rijbaan1.systemen_detecties_list.fold_details_verkeer.button_slagboom.setStyleSheet(self.clicked_stylesheet) 
 
-    def stilstandActive(self):
+    def verkeerslichtActive(self):
         self.hideDetails()
-        if self.rijbaan1.stilstand_details.isVisible() == False:
-            self.rijbaan1.stilstand_details.show()
-            self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_stilstand.setStyleSheet(self.clicked_stylesheet)  
+        if self.rijbaan1.verkeerslicht_details.isVisible() == False:
+            self.rijbaan1.verkeerslicht_details.show()
+            self.rijbaan1.systemen_detecties_list.fold_details_verkeer.button_verkeerslicht.setStyleSheet(self.clicked_stylesheet)  
 
-    def storingActive(self):
-        self.hideDetails()
-        if self.rijbaan1.storing_details.isVisible() == False:
-            self.rijbaan1.storing_details.show()
-            self.rijbaan1.systemen_detecties_list.fold_details_detecties.button_storing.setStyleSheet(self.clicked_stylesheet)  
 
     def sensor1Active(self):
         self.hideDetails()
@@ -415,16 +434,5 @@ class SystemenDetecties(QTabWidget):
             self.rijbaan1.sensor1_details.show()
             self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor1.setStyleSheet(self.clicked_stylesheet) 
         
-    def sensor2Active(self):
-        self.hideDetails()
-        if self.rijbaan1.sensor2_details.isVisible() == False:
-            self.rijbaan1.sensor2_details.show()
-            self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor2.setStyleSheet(self.clicked_stylesheet) 
-
-    def sensor3Active(self):
-        self.hideDetails()
-        if self.rijbaan1.sensor3_details.isVisible() == False:
-            self.rijbaan1.sensor3_details.show()
-            self.rijbaan1.systemen_detecties_list.fold_details_sensoren.button_sensor3.setStyleSheet(self.clicked_stylesheet) 
 
         
