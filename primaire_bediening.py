@@ -25,6 +25,27 @@ class RijbaanstatusBox(QComboBox):
         self.setStyleSheet("QComboBox { color: white ; border: 1px solid #111111; background-color: black; border-radius : 1px;}"
                            "QComboBox QAbstractItemView { color: white; border: 1px solid #111111; background-color: black; border-radius : 1px;}")        
         
+class MatrixbordstatusBox(QComboBox):
+    def __init__(self):
+        super().__init__()
+        self.addItem("Zet uit")                 #0 : toon niets
+        self.addItem("Sluit rijbaan")           #1 : Rood kruis
+        self.addItem("Open rijbaan")            #2 : Groene pijl
+        self.addItem("Pijl naar links")         #3 : Witte drijfpijl naar links
+        self.addItem("Pijl naar rechts")        #4 : Witte drijfpijl naar rechts
+        self.addItem("Einde beperkingen")       #5 : Witte cirkel met schuine streep
+        self.addItem("Flash aan")               #6 : Flash aan
+        self.addItem("Flash uit")               #7 : Flash uit
+        self.addItem("Rijsnelheid 50")          #50 : 50 in wit
+        self.addItem("Rijsnelheid 70")          #70 : 70 in wit
+        self.addItem("Rijsnelheid 80")          #80 : 80 in wit
+        self.addItem("Rijsnelheid 90")          #90 : 90 in wit
+        self.addItem("Rijsnelheid 100")         #100 : 100 in wit
+        self.setFixedSize(140,34)
+        self.setFont(QFont("Nirmala UI", 10))
+        self.setStyleSheet("QComboBox { color: white ; border: 1px solid #111111; background-color: black; border-radius : 1px;}"
+                           "QComboBox QAbstractItemView { color: white; border: 1px solid #111111; background-color: black; border-radius : 1px;}")        
+        
 
 class IconButton(QPushButton):
     def __init__(self, icon):
@@ -74,6 +95,13 @@ class Bedieningen(QFrame):
         self.stoplicht = StopLichtBox()
         self.changeStoplichtStatus()
 
+        self.matrix_status = FontLabel("Toon niets", 10, False)
+        self.matrix_status.setStyleSheet("FontLabel {color : white; background-color: black; border : 0px; border-radius : 1px;}")
+        self.matrix_status.setFixedSize(120,34)
+        self.matrix = MatrixbordstatusBox()
+        self.changeMatrixStatus()
+
+
         self.horizontalstretch_4 = QSpacerItem(4,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum)
         self.horizontalstretch_40 = QSpacerItem(40,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum)
         self.horizontalstretch = QSpacerItem(0,0,QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Minimum)
@@ -88,12 +116,17 @@ class Bedieningen(QFrame):
         self.layout.addItem(self.horizontalstretch_4)
         self.layout.addWidget(self.button_close)
         self.layout.addWidget(self.button_open)
-        self.layout.addItem(self.horizontalstretch)
+        self.layout.addItem(self.horizontalstretch_4)
+        self.layout.addWidget(self.matrix_status)
+        self.layout.addItem(self.horizontalstretch_4)
+        self.layout.addWidget(self.matrix)
+        
 
         self.button_open.clicked.connect(self.setSlagboomStatusOpen)
         self.button_close.clicked.connect(self.setSlagboomStatusClosed)
 
         self.stoplicht.currentIndexChanged.connect(self.changeStoplichtStatus)
+        self.matrix.currentIndexChanged.connect(self.changeMatrixStatus)
 
 
     def changeStoplichtStatus(self):
@@ -102,6 +135,8 @@ class Bedieningen(QFrame):
         if self.stoplicht.currentIndex() == 1:
             self.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
 
+    def changeMatrixStatus(self):
+        self.matrix_status.setText(self.matrix.currentText())
 
     def setSlagboomStatusOpen(self):
         if self.button_close.isChecked() == False:
