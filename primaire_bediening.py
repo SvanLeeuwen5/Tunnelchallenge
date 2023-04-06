@@ -1,146 +1,153 @@
-from PyQt6.QtWidgets import QGridLayout, QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout, QTabWidget, QHBoxLayout, QApplication, QWidget, QTableView, QHeaderView, QMainWindow, QTableWidget, QTableWidgetItem, QGroupBox, QScrollArea, QMenu
+from PyQt6.QtWidgets import QGridLayout, QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout, QComboBox, QHBoxLayout, QApplication, QWidget, QTableView, QHeaderView, QMainWindow, QTableWidget, QTableWidgetItem, QGroupBox, QScrollArea, QMenu
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon,QPixmap, QFont
 from font import FontLabel
-
-
-class Rijbaan(QFrame):  #Tekst Rijbaan
-     def __init__(self):
-        super().__init__()
-
-        self.layout = QHBoxLayout()
-        self.setLayout(self.layout)
-        label = QLabel("Rijbaan 1")
-        label.setStyleSheet("border-bottom : 1px solid white ; border-radius : 0px ; padding-bottom : 4px" )
-        self.layout.addWidget(label)
     
-class Button(QPushButton):
-    def __init__(self, text, icon=None, menu=None):
-        super().__init__()
-        self.setText(text)
-        if icon:
-            self.setIcon(QIcon(icon))
-        if menu:
-            self.setMenu(menu)
 
-
-class Menu(QMenu):
+class StopLichtBox(QComboBox):
     def __init__(self):
         super().__init__()
-        self.optie1 = self.addAction("Optie 1")
-        self.optie2 = self.addAction("Optie 2")
-        self.optie3 = self.addAction("Optie 3")
+        self.addItem("Rood")
+        self.addItem("Uitschakelen")
+        self.setFixedSize(18,40)
+        self.setStyleSheet("QComboBox::down-arrow { image: url(icons/caret-down.svg);}"
+                           "QComboBox::drop-down {width : 20px; color: white; border: 1px solid black; background-color: #bac8ce; border-radius : 0px; border-top-right-radius : 2px; border-bottom-right-radius : 2px; border-left : 1px solid #818181}"
+                           "QComboBox QAbstractItemView {min-width : 100px; background-color: #bac8ce;color: black; border: 1px solid black; }")
 
+class RijbaanstatusBox(QComboBox):
+    def __init__(self):
+        super().__init__()
+        self.addItem("Bedrijf")
+        self.addItem("Evacueren")
+        self.addItem("Ondersteunend")
+        self.setFixedSize(100,34)
+        self.setFont(QFont("Nirmala UI", 10))
+        self.setStyleSheet("QComboBox { color: white ; border: 1px solid #111111; background-color: black; border-radius : 1px;}"
+                           "QComboBox QAbstractItemView { color: white; border: 1px solid #111111; background-color: black; border-radius : 1px;}")        
+        
 
-class Verkeerslichtknop(QPushButton):
+class IconButton(QPushButton):
     def __init__(self, icon):
         super().__init__()
         self.setIcon(QIcon(icon))
+        self.setFixedSize(40,40)
+        self.setCheckable(True)
+        self.setChecked(False)
+        self.setStyleSheet("QPushButton { margin : 0px; border: 1px solid black; background-color: #bac8ce; border-radius : 2px;}"
+                           "QPushButton:checked { background-color: #c6a64c; border: 1px solid black;}")
 
+class TextButton(QPushButton):
+    def __init__(self, text):
+        super().__init__(text)
+        self.setFixedSize(40,40)
+        self.setCheckable(True)
+        self.setChecked(False)
 
-class VerkeerslichtMenu(QMenu):
-    def __init__(self, gedoofd, rood):
-        super().__init__()
-
-        self.zet_gedoofd = self.addAction(QIcon("green_circle.png"), gedoofd)
-        self.zet_rood = self.addAction(QIcon("red_circle.png"), rood)
 
 class Bedieningen(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("background-color: 4c575b;")
-        # Creating horizontal layout for buttons
-        self.h_layout = QHBoxLayout()
-        self.h_layout.setSpacing(20)
+        self.setContentsMargins(10,10,10,10)
+        self.layout = QHBoxLayout()
+        self.setLayout(self.layout)
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(0,0,0,0)
 
-        self.button1 = Button("", "icons/alert-triangle.svg")
+
+        self.noodstop = IconButton("icons/alert-triangle.svg")
         
-        self.button2 = Button("Bedrijf")
-        self.button2.setMenu(Menu())
-        self.button2.menu().optie1.triggered.connect(self.optie1)
-        self.button2.menu().optie2.triggered.connect(self.optie2)
-        self.button2.menu().optie3.triggered.connect(self.optie3)
+        self.rijbaan_status = RijbaanstatusBox()
 
-        self.button3 = Button("")
+        self.slagboom_status = FontLabel("Open", 10, False)
+        self.slagboom_status.setStyleSheet("FontLabel {color : white; background-color: black; border : 0px; border-radius : 1px;}")
+        self.slagboom_status.setFixedSize(60,34)
+        self.button_open = TextButton("Open")
+        self.button_open.setStyleSheet("QPushButton { margin : 0px; border: 1px solid black; background-color: #bac8ce; border-radius : 2px;border-top-left-radius : 0px; border-bottom-left-radius : 0px; border-left : 0px}"
+                                       "QPushButton:checked { background-color: #c6a64c; border: 1px solid black;}")
+        self.button_close = TextButton("Sluit")
+        self.button_close.setStyleSheet("QPushButton { margin : 0px; border: 1px solid black; background-color: #bac8ce; border-radius : 2px;  border-top-right-radius : 0px; border-bottom-right-radius : 0px; border-right : 1px solid #818181}"
+                                        "QPushButton:checked { background-color: #c6a64c; border: 1px solid black;}")
+        self.stoplicht_status = QLabel()
+        self.stoplicht_status.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.stoplicht_status.setStyleSheet("QLabel {padding : 0px;  border: 1px solid black; background-color: #bac8ce; border-radius : 0px; border-top-left-radius : 2px; border-bottom-left-radius : 2px; border-right : 0px}")
+        self.stoplicht_status.setFixedSize(40,40)
+        self.stoplicht = StopLichtBox()
+        self.changeStoplichtStatus()
 
-        self.button5 = Button("Open")
+        self.horizontalstretch_4 = QSpacerItem(4,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum)
+        self.horizontalstretch_40 = QSpacerItem(40,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum)
+        self.horizontalstretch = QSpacerItem(0,0,QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Minimum)
+        self.layout.addWidget(self.noodstop)
+        self.layout.addItem(self.horizontalstretch_4)
+        self.layout.addWidget(self.rijbaan_status)
+        self.layout.addItem(self.horizontalstretch_40)
+        self.layout.addWidget(self.slagboom_status)
+        self.layout.addItem(self.horizontalstretch_4)
+        self.layout.addWidget(self.stoplicht_status)
+        self.layout.addWidget(self.stoplicht)
+        self.layout.addItem(self.horizontalstretch_4)
+        self.layout.addWidget(self.button_close)
+        self.layout.addWidget(self.button_open)
+        self.layout.addItem(self.horizontalstretch)
 
-        self.button6 = Button("Close")
+        self.button_open.clicked.connect(self.setSlagboomStatusOpen)
+        self.button_close.clicked.connect(self.setSlagboomStatusClosed)
 
-        self.button4 = Verkeerslichtknop("icons/circle.svg")
-        self.button4.setMenu(VerkeerslichtMenu("zet gedoofd", "zet rood"))
-
-        self.button4.menu().zet_gedoofd.triggered.connect(self.gedoofdlicht)
-        self.button4.menu().zet_rood.triggered.connect(self.roodlicht)
-
-        self.h_layout.addWidget(self.button1)
-        self.h_layout.addWidget(self.button2)
-        self.h_layout.addWidget(self.button3)
-        self.h_layout.addWidget(self.button4)
-        self.h_layout.addWidget(self.button5)
-        self.h_layout.addWidget(self.button6)
-
-        self.button5.clicked.connect(self.change_button_text)
-        self.button6.clicked.connect(self.change_button_text)
-
-
-        verticale_layout = QVBoxLayout()
-        verticale_layout.addLayout(self.h_layout)
-        self.setLayout(verticale_layout)
-
-    def change_button_text(self):
-        sender = self.sender()
-        if sender == self.button5:
-            self.button3.setText("Opened")
-        elif sender == self.button6:
-            self.button3.setText("Closed")
+        self.stoplicht.currentIndexChanged.connect(self.changeStoplichtStatus)
 
 
-    def roodlicht(self):
-        print("RED")
+    def changeStoplichtStatus(self):
+        if self.stoplicht.currentIndex() == 0:
+            self.stoplicht_status.setPixmap(QPixmap("icons/circle_red.svg").scaled(20,20))
+        if self.stoplicht.currentIndex() == 1:
+            self.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
 
-    def gedoofdlicht(self):
-        print("GEDOOFD")
 
-    def optie1(self):
-        print("Optie 1")
-        #hier kunnen acties worden uitgevoerd
+    def setSlagboomStatusOpen(self):
+        if self.button_close.isChecked() == False:
+            self.slagboom_status.setText("Open")
+        else:
+            self.button_close.setChecked(False)
+            self.slagboom_status.setText("Open")
 
-    def optie2(self):
-        print("Optie 2")
-        #hier kunnen acties worden uitgevoerd
-
-    def optie3(self):
-        print("Optie 3")
-        #hier kunnen acties worden uitgevoerd
+    def setSlagboomStatusClosed(self):
+        if self.button_open.isChecked() == False:
+            self.slagboom_status.setText("Dicht")
+        else:
+            self.button_open.setChecked(False)
+            self.slagboom_status.setText("Dicht")       
 
 
 
 class Blokbedieningen(QFrame):
-    def __init__(self):
+    def __init__(self, text):
         super().__init__()
-        self.setStyleSheet("background-color {color : #ffffff; background-color: #ffffff;border-radius: 5px;}")
-        self.setContentsMargins(10,10,10,10)
-        
-        self.rijbaan_nummer = Rijbaan()
-        self.bedieningsknoppen = Bedieningen()
-        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
-
+        self.setStyleSheet("FontLabel {padding : 4px; border-bottom: 1px solid white;border-radius: 0px;}")
+        self.setContentsMargins(0,0,0,0)
         self.layout = QVBoxLayout()
-        
+        self.setLayout(self.layout)
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(0,0,0,0)
+
+        self.rijbaan_nummer = FontLabel(text, 14, True)
+        self.bedieningsknoppen = Bedieningen()
+
         self.layout.addWidget(self.rijbaan_nummer)
         self.layout.addWidget(self.bedieningsknoppen)
-        self.layout.addItem(self.verticalstrech)
-        self.setLayout(self.layout)
-
 
         
 class PrimaireBediening(QFrame):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet("QFrame {color : #ffffff; background-color: #859faa;border-radius: 5px;}")
-        self.layout = QHBoxLayout()
+        self.setContentsMargins(10,10,10,10)
+        self.setStyleSheet("QFrame {color : #ffffff; background-color: #859faa; border-radius: 5px;}")
+        self.layout = QVBoxLayout()
+        self.setMaximumWidth(600)
         self.setLayout(self.layout)
 
-        self.bediening = Blokbedieningen()
-        self.layout.addWidget(self.bediening)
+        self.rijbaan1Bediening = Blokbedieningen("Rijbaan 1")
+        self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
+        self.layout.addWidget(self.rijbaan1Bediening)
+        self.layout.addItem(self.verticalstrech)
+
+       
