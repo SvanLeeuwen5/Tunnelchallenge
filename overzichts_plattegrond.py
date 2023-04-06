@@ -53,7 +53,11 @@ class Matrixbord(QFrame):
         self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #2c2c2c ;border-radius: 5px;}")
         self.layout = QVBoxLayout()
         self.layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        
+        self.setStatus(status)
+        self.layout.addWidget(self.label)
+        self.setLayout(self.layout)
+
+    def setStatus(self, status):
         if status > 0:
             self.label = QLabel()
             self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -75,8 +79,6 @@ class Matrixbord(QFrame):
                 elif status == 5:
                     self.icon = QIcon('icons/end-signal')
                     self.label.setPixmap(self.icon.pixmap(160, 160))
-
-                self.layout.addWidget(self.label)
             else:
                 if status == 50:
                     self.label = FontLabel("50", 60, True)
@@ -88,12 +90,8 @@ class Matrixbord(QFrame):
                     self.label = FontLabel("90", 60, True)
                 elif status == 100:
                     self.label = FontLabel("100", 60, True)
-
                 
                 self.label.setStyleSheet("color: white; font: bold;")
-                self.layout.addWidget(self.label)
-        
-        self.setLayout(self.layout)
 
 class OverzichtsPlattegrond(QFrame):
     def __init__(self):

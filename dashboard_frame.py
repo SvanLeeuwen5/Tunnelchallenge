@@ -9,7 +9,6 @@ from overzichts_plattegrond import OverzichtsPlattegrond
 #   Verlichting
 """
 Toestandsvariabelen                          Commando's
-
 #richting: aflopend | oplopend                 SetAutoregeling(aan | uit)
 #niveau: percentage                            SetStand(0..10)
 #capaciteit_beschikbaar: percentage
@@ -18,16 +17,15 @@ Toestandsvariabelen                          Commando's
 #   SOS
 """
 Toestandsvariabelen                            Commando's
-
 #snelheidsonderschrijdingen: locatie           SetEnabled(r: rijstrook, l1: lengtepositie, l2: lengtepositie, ja|nee):                                             
 #spookrijders[]: locatie
 #stilstanden[]: locatie
 #disabled_detectiepunten[]: locatie                                                
-
 """
 #   Verkeerslichten
 
 #   MTM Borden
+
 class DashboardFrame(QFrame):
     def __init__(self,parent):
         super().__init__()
