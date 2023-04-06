@@ -107,11 +107,14 @@ class DataParser:
         return (response.get("status") == "success")
 
 
+
+# Testcode below
+
 #c = DataParser()
 #c.Control_Barrier(0, "down")
 #print(c.barrier_state)
-c = DataParser()
-response = { "status": "success", "data": {"message": "Command sent."}}
-message = response["data"]["message"]
-print(message)
-print(c.ResponseIsSuccesful(response))
+# c = DataParser()
+# response = { "status": "success", "data": {"message": "Command sent."}}
+# message = response["data"]["message"]
+# print(message)
+# print(c.ResponseIsSuccesful(response))
