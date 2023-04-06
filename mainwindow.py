@@ -92,16 +92,16 @@ class mainwindow(QWidget):
         self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv.preset)
         #VRI
         vri = self.data.vri_state
-        self.dashboard_window.systemen_detecties.rijbaan1.stoplichting_details.state.setWaarde(vri.state)
-        self.dashboard_window.systemen_detecties.rijbaan1.stoplichting_details.availability.setWaarde(vri.availability)
-        self.dashboard_window.systemen_detecties.rijbaan1.stoplichting_details.error.setWaarde(vri.error)
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri.state)
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri.availability)
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri.error)
         #BARRIER
         barrier = self.data.barrier_state
-        self.dashboard_window.systemen_detecties.rijbaan1.barrier_details.state.setWaarde(barrier.state)
-        self.dashboard_window.systemen_detecties.rijbaan1.barrier_details.availability.setWaarde(barrier.availability)
-        self.dashboard_window.systemen_detecties.rijbaan1.barrier_details.movement.setWaarde(barrier.movement)
-        self.dashboard_window.systemen_detecties.rijbaan1.barrier_details.obstacle.setWaarde(barrier.obstacle)
-        self.dashboard_window.systemen_detecties.rijbaan1.barrier_details.error.setWaarde(barrier.error)
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier.state)
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier.availability)
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.movement.setWaarde(barrier.movement)
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.obstacle.setWaarde(barrier.obstacle)
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.error.setWaarde(barrier.error)
         #MATRIX
         matrix = self.data.msi_state
         self.dashboard_window.overzichts_plattegrond.matrix1.matrixbord.setStatus(matrix.status)
