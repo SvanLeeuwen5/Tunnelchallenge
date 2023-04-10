@@ -101,12 +101,13 @@ class ControlPanel(QFrame):
 
     def addFrames(self):
         self.panel_camera1 = CameraPanel("Camera 1")
-        self.panel_camera2 = CameraPanel("Camera 2")	
-        self.panel_camera3 = CameraPanel("Camera 3")
+        self.panel_camera1.setFixedSize(400,400)
+        #self.panel_camera2 = CameraPanel("Camera 2")	
+        #self.panel_camera3 = CameraPanel("Camera 3")
 
         self.layout.addWidget(self.panel_camera1,0,0)
-        self.layout.addWidget(self.panel_camera2,0,1)
-        self.layout.addWidget(self.panel_camera3,1,0)
+        #self.layout.addWidget(self.panel_camera2,0,1)
+        #self.layout.addWidget(self.panel_camera3,1,0)
 
 
 class VideoFrame(QFrame):
@@ -149,17 +150,17 @@ class CameraFrame(QFrame):
         self.addFrames()
 
     def addFrames(self):
-        #self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
+        self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
         #self.camera2 = VideoFrame("Camera 2", "https://dl6.webmfiles.org/big-buck-bunny_trailer.webm")
         #self.camera3 = VideoFrame("Camera 3", "https://dl6.webmfiles.org/elephants-dream.webm")
         self.controlpanel = ControlPanel()
 
         self.layout.setColumnStretch(0,1)
-        self.layout.setColumnStretch(1,1)
-        self.layout.setRowStretch(0,1)
-        self.layout.setRowStretch(1,1)
+        #self.layout.setColumnStretch(1,1)
+        #self.layout.setRowStretch(0,1)
+        #self.layout.setRowStretch(1,1)
 
-        #self.layout.addWidget(self.camera1,0,0)
+        self.layout.addWidget(self.camera1,0,0)
         #self.layout.addWidget(self.camera2,0,1)
         #self.layout.addWidget(self.camera3,1,0)
-        self.layout.addWidget(self.controlpanel,1,1)
+        self.layout.addWidget(self.controlpanel,0,1)
