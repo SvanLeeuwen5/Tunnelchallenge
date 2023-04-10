@@ -72,7 +72,6 @@ class Bedieningen(QFrame):
         self.stoplicht_status.setStyleSheet("QLabel {padding : 0px;  border: 1px solid black; background-color: #bac8ce; border-radius : 0px; border-top-left-radius : 2px; border-bottom-left-radius : 2px; border-right : 0px}")
         self.stoplicht_status.setFixedSize(40,40)
         self.stoplicht = StopLichtBox()
-        self.changeStoplichtStatus()
 
         self.horizontalstretch_4 = QSpacerItem(4,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum)
         self.horizontalstretch_40 = QSpacerItem(40,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Minimum)
@@ -89,35 +88,6 @@ class Bedieningen(QFrame):
         self.layout.addWidget(self.button_close)
         self.layout.addWidget(self.button_open)
         self.layout.addItem(self.horizontalstretch)
-
-        self.button_open.clicked.connect(self.setSlagboomStatusOpen)
-        self.button_close.clicked.connect(self.setSlagboomStatusClosed)
-
-        self.stoplicht.currentIndexChanged.connect(self.changeStoplichtStatus)
-
-
-    def changeStoplichtStatus(self):
-        if self.stoplicht.currentIndex() == 0:
-            self.stoplicht_status.setPixmap(QPixmap("icons/circle_red.svg").scaled(20,20))
-        if self.stoplicht.currentIndex() == 1:
-            self.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
-
-
-    def setSlagboomStatusOpen(self):
-        if self.button_close.isChecked() == False:
-            self.slagboom_status.setText("Open")
-        else:
-            self.button_close.setChecked(False)
-            self.slagboom_status.setText("Open")
-
-    def setSlagboomStatusClosed(self):
-        if self.button_open.isChecked() == False:
-            self.slagboom_status.setText("Dicht")
-        else:
-            self.button_open.setChecked(False)
-            self.slagboom_status.setText("Dicht")       
-
-
 
 class Blokbedieningen(QFrame):
     def __init__(self, text):

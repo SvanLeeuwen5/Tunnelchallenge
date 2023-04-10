@@ -150,7 +150,7 @@ class CameraFrame(QFrame):
         self.addFrames()
 
     def addFrames(self):
-        self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
+        #self.camera1 = VideoFrame("Camera 1", "https://dl6.webmfiles.org/elephants-dream.webm")
         #self.camera2 = VideoFrame("Camera 2", "https://dl6.webmfiles.org/big-buck-bunny_trailer.webm")
         #self.camera3 = VideoFrame("Camera 3", "https://dl6.webmfiles.org/elephants-dream.webm")
         self.controlpanel = ControlPanel()
@@ -160,7 +160,7 @@ class CameraFrame(QFrame):
         #self.layout.setRowStretch(0,1)
         #self.layout.setRowStretch(1,1)
 
-        self.layout.addWidget(self.camera1,0,0)
+        #self.layout.addWidget(self.camera1,0,0)
         #self.layout.addWidget(self.camera2,0,1)
         #self.layout.addWidget(self.camera3,1,0)
         self.layout.addWidget(self.controlpanel,0,1)

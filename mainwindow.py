@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout
 from PyQt6.QtCore import QMargins, QTimer
+from PyQt6.QtGui import QPixmap
 from menu_frame import Menu
 from camera_frame import CameraFrame
 from dashboard_frame import DashboardFrame
@@ -144,22 +145,42 @@ class mainwindow(QWidget):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndexChanged.connect(self.changeStoplichtState)
 
     def openSlagboom(self):
-        barrier = self.data.barrier_state
-        if barrier[0] == 1:
-            self.data.Control_Barrier(0,'up')
+        if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.isChecked() == False:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Open")
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(False)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(True)
+        else:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setChecked(False)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(False)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(True)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Open")
+        #barrier = self.data.barrier_state
+        #if barrier[0] == 1:
+            #self.data.Control_Barrier(0,'up')
 
     def closeSlagboom(self):
-        barrier = self.data.barrier_state
-        if barrier[0] == 0:
-            self.data.Control_Barrier(0,'down')
+        if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.isChecked() == False:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(False)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(True)
+        else:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setChecked(False)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")  
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(False)
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(True)     
+        #barrier = self.data.barrier_state
+        #if barrier[0] == 0:
+            #self.data.Control_Barrier(0,'down')
 
     def changeTunnelState(self):
         index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndex()
         print(index)
 
     def changeStoplichtState(self):
-        index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex()
-        print(index)
+        if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex() == 0:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht_status.setPixmap(QPixmap("icons/circle_red.svg").scaled(20,20))
+        if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex() == 1:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
         
 if __name__ == '__main__':
     app = QApplication([])
