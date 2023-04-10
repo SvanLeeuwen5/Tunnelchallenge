@@ -26,6 +26,7 @@ class mainwindow(QWidget):
         self.connectMenuButtons()
         self.connectCameraSliders()
         self.connectPrimaireBediening()
+        self.changeStoplichtState()
         self.show()   
 
     def initUI(self):
@@ -141,8 +142,12 @@ class mainwindow(QWidget):
     def connectPrimaireBediening(self):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.clicked.connect(self.openSlagboom)
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.clicked.connect(self.closeSlagboom)
+        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.noodstop.clicked.connect(self.noodStop)
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndexChanged.connect(self.changeTunnelState)
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndexChanged.connect(self.changeStoplichtState)
+
+    def noodStop(self):
+        pass
 
     def openSlagboom(self):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.isChecked() == False:
@@ -177,10 +182,9 @@ class mainwindow(QWidget):
         print(index)
 
     def changeStoplichtState(self):
-        if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex() == 0:
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht_status.setPixmap(QPixmap("icons/circle_red.svg").scaled(20,20))
-        if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex() == 1:
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
+        index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex()
+        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.changeStoplichtStatus(index)
+        print(index)
         
 if __name__ == '__main__':
     app = QApplication([])

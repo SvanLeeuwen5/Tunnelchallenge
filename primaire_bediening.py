@@ -69,7 +69,7 @@ class Bedieningen(QFrame):
                                         "QPushButton:checked { background-color: #c6a64c; border: 1px solid black;}")
         self.stoplicht_status = QLabel()
         self.stoplicht_status.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.stoplicht_status.setStyleSheet("QLabel {padding : 0px;  border: 1px solid black; background-color: #bac8ce; border-radius : 0px; border-top-left-radius : 2px; border-bottom-left-radius : 2px; border-right : 0px}")
+        self.stoplicht_status.setStyleSheet("QLabel {color : black; padding : 0px;  border: 1px solid black; background-color: #bac8ce; border-radius : 0px; border-top-left-radius : 2px; border-bottom-left-radius : 2px; border-right : 0px}")
         self.stoplicht_status.setFixedSize(40,40)
         self.stoplicht = StopLichtBox()
 
@@ -88,6 +88,18 @@ class Bedieningen(QFrame):
         self.layout.addWidget(self.button_close)
         self.layout.addWidget(self.button_open)
         self.layout.addItem(self.horizontalstretch)
+
+    def changeStoplichtStatus(self, status):
+        if status == 0:
+            self.stoplicht_status.setPixmap(QPixmap("icons/circle_red.svg").scaled(20,20))
+            self.stoplicht_status.setText("")
+        if status == 1:
+            self.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
+            self.stoplicht_status.setText("")
+        if status == 2:
+            self.stoplicht_status.setPixmap(QPixmap().scaled(20,20))
+            self.stoplicht_status.setText("Uit")
+            #self.stoplicht_status.setPixmap(QPixmap("icons/circle.svg").scaled(20,20))
 
 class Blokbedieningen(QFrame):
     def __init__(self, text):
