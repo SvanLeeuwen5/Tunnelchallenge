@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QGridLayout, QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout, QComboBox, QHBoxLayout, QApplication, QWidget, QTableView, QHeaderView, QMainWindow, QTableWidget, QTableWidgetItem, QGroupBox, QScrollArea, QMenu
+from PyQt6.QtWidgets import QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout, QComboBox, QHBoxLayout
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon,QPixmap, QFont
 from font import FontLabel
@@ -20,7 +20,7 @@ class RijbaanstatusBox(QComboBox):
         self.addItem("Bedrijf")
         self.addItem("Evacueren")
         self.addItem("Ondersteunend")
-        self.setFixedSize(100,34)
+        self.setFixedSize(120,34)
         self.setFont(QFont("Nirmala UI", 10))
         self.setStyleSheet("QComboBox { color: white ; border: 1px solid #111111; background-color: black; border-radius : 1px;}"
                            "QComboBox QAbstractItemView { color: white; border: 1px solid #111111; background-color: black; border-radius : 1px;}")        

@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QGridLayout, QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout, QTabWidget, QHBoxLayout, QApplication, QWidget, QTableView, QHeaderView, QMainWindow, QTableWidget, QTableWidgetItem, QGroupBox, QScrollArea, QMenu
+from PyQt6.QtWidgets import QGridLayout, QFrame, QPushButton, QLabel, QVBoxLayout, QHBoxLayout
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon, QFont
+from PyQt6.QtGui import QIcon
 from font import FontLabel
 
 class Button(QPushButton):

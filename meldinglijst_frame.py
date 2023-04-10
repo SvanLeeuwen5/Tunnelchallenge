@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QFrame, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout,QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem, QStyleOptionViewItem
+from PyQt6.QtWidgets import QFrame, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout,QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from font import FontLabel

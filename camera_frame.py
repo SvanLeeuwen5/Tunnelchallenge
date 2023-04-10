@@ -1,6 +1,5 @@
-from PyQt6.QtWidgets import QGridLayout, QFrame, QLabel, QVBoxLayout, QSlider
+from PyQt6.QtWidgets import QGridLayout, QFrame, QVBoxLayout, QSlider
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont
 from font import FontLabel
 import vlc
 

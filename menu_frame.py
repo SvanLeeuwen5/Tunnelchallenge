@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import  QFrame, QHBoxLayout, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout, QLabel
+from PyQt6.QtWidgets import  QFrame, QPushButton, QSpacerItem, QSizePolicy, QVBoxLayout, QLabel
 from PyQt6.QtCore import QMargins, Qt, QSize, QEvent
-from PyQt6.QtGui import QIcon, QFont, QPixmap
+from PyQt6.QtGui import QIcon, QPixmap
 
 
 class MenuButton(QPushButton):

@@ -1,6 +1,5 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout, QFrame, QPushButton, QLabel, QSpacerItem, QSizePolicy, QVBoxLayout
-from PyQt6.QtCore import QMargins, Qt, QTimer
-from PyQt6.QtGui import QFont, QMouseEvent
+from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout
+from PyQt6.QtCore import QMargins, QTimer
 from menu_frame import Menu
 from camera_frame import CameraFrame
 from dashboard_frame import DashboardFrame
@@ -21,9 +20,11 @@ class mainwindow(QWidget):
         self.createLayout()
         self.addPages()
         self.dashboardActive()
-        self.connectButtons()
         #self.refreshData()
         #self.setTimer()
+        self.connectMenuButtons()
+        self.connectCameraSliders()
+        self.connectPrimaireBediening()
         self.show()   
 
     def initUI(self):
@@ -46,7 +47,7 @@ class mainwindow(QWidget):
         self.mainwindow_layout.addWidget(self.dashboard_window, 0, 1)
         self.mainwindow_layout.addWidget(self.login_window, 0, 1)
 
-    def connectButtons(self):
+    def connectMenuButtons(self):
         self.menu.button_dashboard.clicked.connect(self.dashboardActive)
         self.menu.button_camera.clicked.connect(self.cameraActive)
         self.menu.button_logout.clicked.connect(self.loginActive)
@@ -78,48 +79,88 @@ class mainwindow(QWidget):
         self.timer.start(1000) 
 
     def refreshData(self):
-        #VERLICHTING
+            #VERLICHTING
         verlichting = self.data.lighting_state
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting.niveau) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting.capaciteit)
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting.energieverbruik)
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting.branduren)
-        #CCTV
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[0]) 
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[2])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[3])
+            #CCTV
         cctv = self.data.cctv_state
-        self.camera_window.controlpanel.panel_camera1.option_slider_pan.setValue(cctv.pan)
-        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.setValue(cctv.tilt)
-        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.setValue(cctv.zoom)
-        self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv.preset)
-        #VRI
+        self.camera_window.controlpanel.panel_camera1.option_slider_pan.setValue(cctv[0])
+        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.setValue(cctv[1])
+        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.setValue(cctv[2])
+        self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv[3])
+            #VRI
         vri = self.data.vri_state
-        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri.state)
-        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri.availability)
-        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri.error)
-        #BARRIER
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri[0])
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri[1])
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri[2])
+            #BARRIER
         barrier = self.data.barrier_state
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier.state)
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier.availability)
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.movement.setWaarde(barrier.movement)
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.obstacle.setWaarde(barrier.obstacle)
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.error.setWaarde(barrier.error)
-        #MATRIX
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier[0])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier[1])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.movement.setWaarde(barrier[2])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.obstacle.setWaarde(barrier[3])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.error.setWaarde(barrier[4])
+            #MATRIX
         matrix = self.data.msi_state
-        self.dashboard_window.overzichts_plattegrond.matrix1.matrixbord.setStatus(matrix.status)
-        self.dashboard_window.overzichts_plattegrond.matrix2.matrixbord.setStatus(matrix.status)
-        self.dashboard_window.overzichts_plattegrond.matrix3.matrixbord.setStatus(matrix.status)
-        self.dashboard_window.overzichts_plattegrond.matrix4.matrixbord.setStatus(matrix.status)
-        #SENSOR
-        sensor = self.data.sensor_state
-        self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO.setWaarde(barrier.CO)
-        self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO2.setWaarde(barrier.CO2)
+        self.dashboard_window.overzichts_plattegrond.matrix1.matrixbord.setStatus(matrix[0])
+        self.dashboard_window.overzichts_plattegrond.matrix2.matrixbord.setStatus(matrix[1])
+        self.dashboard_window.overzichts_plattegrond.matrix3.matrixbord.setStatus(matrix[2])
+        self.dashboard_window.overzichts_plattegrond.matrix4.matrixbord.setStatus(matrix[3])
+            #SENSOR
+        #sensor = self.data.sensor_state
+        #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO.setWaarde(barrier[0])
+        #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO2.setWaarde(barrier[1])
+        #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.NO2.setWaarde(barrier[2])
 
+    def connectCameraSliders(self):
+        self.camera_window.controlpanel.panel_camera1.option_slider_pan.valueChanged.connect(self.changePan)
+        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.valueChanged.connect(self.changeTilt)
+        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.valueChanged.connect(self.changeZoom)
+        self.camera_window.controlpanel.panel_camera1.option_slider_preset.valueChanged.connect(self.changePreset)
 
+    def changePan(self):
+        print(self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
+        #self.data.Control_CCTV(0,'change_pan',self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
 
+    def changeTilt(self):
+        print(self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value())
+        #self.data.Control_CCTV(0,'change_tilt',self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value())
 
-        	
+    def changeZoom(self):
+        print(self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
+        #self.data.Control_CCTV(0,'change_zoom',self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
 
+    def changePreset(self):
+        print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+        #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
 
+    def connectPrimaireBediening(self):
+        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.clicked.connect(self.openSlagboom)
+        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.clicked.connect(self.closeSlagboom)
+        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndexChanged.connect(self.changeTunnelState)
+        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndexChanged.connect(self.changeStoplichtState)
 
+    def openSlagboom(self):
+        barrier = self.data.barrier_state
+        if barrier[0] == 1:
+            self.data.Control_Barrier(0,'up')
+
+    def closeSlagboom(self):
+        barrier = self.data.barrier_state
+        if barrier[0] == 0:
+            self.data.Control_Barrier(0,'down')
+
+    def changeTunnelState(self):
+        index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndex()
+        print(index)
+
+    def changeStoplichtState(self):
+        index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex()
+        print(index)
+        
 if __name__ == '__main__':
     app = QApplication([])
     mw = mainwindow()

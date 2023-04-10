@@ -38,17 +38,17 @@ class DashboardFrame(QFrame):
         self.addFrames()
 
     def addFrames(self):
-        self.primaire_bedieing = PrimaireBediening()
+        self.primaire_bediening = PrimaireBediening()
         self.overzichts_plattegrond = OverzichtsPlattegrond()
         self.melding_lijst = MeldingLijst()
         self.systemen_detecties = SystemenDetecties()
 
-        self.primaire_bedieing.setMinimumSize(400,400)
+        self.primaire_bediening.setMinimumSize(400,400)
         self.overzichts_plattegrond.setMinimumSize(400,400)
         self.melding_lijst.setMinimumSize(400,400)
         self.systemen_detecties.setMinimumSize(400,400) 
 
-        self.layout.addWidget(self.primaire_bedieing, 0, 0)
+        self.layout.addWidget(self.primaire_bediening, 0, 0)
         self.layout.addWidget(self.overzichts_plattegrond, 0, 1)
         self.layout.addWidget(self.melding_lijst, 1, 1)
         self.layout.addWidget(self.systemen_detecties, 1, 0)
