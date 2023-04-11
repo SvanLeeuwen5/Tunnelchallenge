@@ -8,7 +8,6 @@ class DataParser:
         self.ipaddress = "ws://213.93.142.164:8084"
         #self.ipaddress = "ws://128.64.32.35:8081"
         self.websocket = None
-        self.sos_state = []
         self.cctv_state = []
         self.lighting_state = []
         self.vri_state = []
@@ -19,7 +18,6 @@ class DataParser:
 
     async def UpdateAllStatusses(self):
         self.websocket = await websockets.connect(self.ipaddress)
-        await self.UpdateStatus_SOS()
         await self.UpdateStatus_CCTV()
         await self.UpdateStatus_Lighting()
         await self.UpdateStatus_VRI()
@@ -27,12 +25,7 @@ class DataParser:
         await self.UpdateStatus_MSI()
         await self.UpdateStatus_Calamity()
 
-    # TODO
-    #############
-    async def Control_SOS(self, id, command):
-        control_command = {"id": id, "action": "command", "lfv": "sos", "command": command}
-        return self.ResponseIsSuccesful(await self.send_command(control_command))
-    #############
+    # Control Commands
 
     # command (string): change_pan change_tilt change_zoom change_preset     id (int): 0 1 2   value (int): number between min and max value
     async def Control_CCTV(self, id, command, value):
@@ -64,16 +57,7 @@ class DataParser:
         control_command = {"action": "command", "lfv": "calamity", "command": command}
         return self.ResponseIsSuccesful(await self.send_command(control_command))
 
-    # Retrieving Status Commando's
-
-    #TODO
-    #######################
-    # server returns a json object for every "SOS"
-    # sos_state: array of objects of the form: { ? }
-    async def UpdateStatus_SOS(self):
-        command = {"action": "status", "lfv": "sos"}
-        self.sos_state = [await self.send_command(command)["data"]]
-    ########################
+    # Retrieving Status Commands
 
     # server returns a json object for every camera
     # sos_state: array of objects of the form: {id, pan, tilt, zoom, preset}
@@ -106,7 +90,7 @@ class DataParser:
         self.msi_state = [await self.send_command(command)["data"]]       
 
     # server returns a json object for calamity
-    # msi_state: array of objects of the form: {id, calamity_description}
+    # msi_state: array of objects of the form: {id, calamity (true / false)}
     async def UpdateStatus_Calamity(self):
         command = {"action": "status", "lfv": "calamity"}
         self.calamity_state = [await self.send_command(command)["data"]]
@@ -121,8 +105,8 @@ class DataParser:
     def ResponseIsSuccesful(self, response):
         return (response.get("status") == "success")
 
-# Testcode below
 
+# Testcode below
 #c = DataParser()
 #c.UpdateStatus_Calamity()
 #print(c.calamity_state)
