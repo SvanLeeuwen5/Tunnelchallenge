@@ -13,7 +13,7 @@ class Button(QPushButton):
             self.setMenu(menu)
 
 class MatrixFrame(QFrame):
-    def __init__(self, matrixbord, status):
+    def __init__(self, matrixbord, status=0, flashstatus=0):
         super().__init__()
         self.setStyleSheet("QFrame {color : white; background-color: #859faa;}")
         self.layout = QGridLayout()
@@ -33,7 +33,8 @@ class MatrixFrame(QFrame):
         self.hLayout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         self.hLayout.addWidget(self.matrix_label)
-        self.setFlash(status)
+        self.label = QLabel()
+        self.setFlash(flashstatus)
 
         self.matrixbord = Matrixbord(status)
         self.matrixBesturing =BesturingFrame()
@@ -43,14 +44,12 @@ class MatrixFrame(QFrame):
         self.layout.addWidget(self.matrixBesturing,1,1)
 
     def setFlash(self, status):
-        self.label = QLabel()
-
-        if status == 6: #Flash On    
+        if status == "on": #Flash On    
             self.icon = QIcon('icons/flash-on')
             self.label.setPixmap(self.icon.pixmap(160, 160))
             self.hLayout.addWidget(self.label)
         
-        if status == 7: #Flash Off
+        if status == "off": #Flash Off
             self.icon = QIcon('icons/flash-off')
             self.label.setPixmap(self.icon.pixmap(160, 160))
             self.hLayout.addWidget(self.label)
@@ -62,44 +61,40 @@ class Matrixbord(QFrame):
         self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #2c2c2c ;border-radius: 5px;}")
         self.layout = QVBoxLayout()
         self.layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label = QLabel()
+        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.setStatus(status)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
 
-    def setStatus(self, status):
-        self.label = QLabel()
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+    def setStatus(self, status):   
+        if status == "red_cross":
+            self.icon = QIcon('icons/red-cross')
+            self.label.setPixmap(self.icon.pixmap(160, 160))
+        elif status == "green_arrow":
+            self.icon = QIcon('icons/green-arrow')
+            self.label.setPixmap(self.icon.pixmap(160, 160))
+        elif status == "arrow_left":
+            self.icon = QIcon('icons/arrow-left')
+            self.label.setPixmap(self.icon.pixmap(160, 160))
+        elif status == "arrow_right":
+            self.icon = QIcon('icons/arrow-right')
+            self.label.setPixmap(self.icon.pixmap(160, 160))
+        elif status == "end_limitation":
+            self.icon = QIcon('icons/end-signal')
+            self.label.setPixmap(self.icon.pixmap(160, 160))
+        elif status == "50":
+            self.label = FontLabel("50", 60, True)
+        elif status == "70":
+            self.label = FontLabel("70", 60, True)
+        elif status == "80":
+            self.label = FontLabel("80", 60, True)
+        elif status == "90":
+            self.label = FontLabel("90", 60, True)
+        elif status == "100":
+            self.label = FontLabel("100", 60, True)
         
-        if status < 50:
-        
-            if status == 1:
-                self.icon = QIcon('icons/red-cross')
-                self.label.setPixmap(self.icon.pixmap(160, 160))
-            elif status == 2:
-                self.icon = QIcon('icons/green-arrow')
-                self.label.setPixmap(self.icon.pixmap(160, 160))
-            elif status == 3:
-                self.icon = QIcon('icons/arrow-left')
-                self.label.setPixmap(self.icon.pixmap(160, 160))
-            elif status == 4:
-                self.icon = QIcon('icons/arrow-right')
-                self.label.setPixmap(self.icon.pixmap(160, 160))
-            elif status == 5:
-                self.icon = QIcon('icons/end-signal')
-                self.label.setPixmap(self.icon.pixmap(160, 160))
-        else:
-            if status == 50:
-                self.label = FontLabel("50", 60, True)
-            elif status == 70:
-                self.label = FontLabel("70", 60, True)
-            elif status == 80:
-                self.label = FontLabel("80", 60, True)
-            elif status == 90:
-                self.label = FontLabel("90", 60, True)
-            elif status == 100:
-                self.label = FontLabel("100", 60, True)
-            
-            self.label.setStyleSheet("color: white; font: bold;")
+        self.label.setStyleSheet("color: white; font: bold;")
 
 class MatrixStatus(QComboBox):
     def __init__(self):
@@ -157,7 +152,7 @@ class OverzichtsPlattegrond(QFrame):
         self.addFrames()
 
     def addFrames(self):
-        self.matrix = MatrixFrame("Matrixbord", 0)
+        self.matrix = MatrixFrame("Matrixbord", "off", "off")
 
         self.layout.setColumnStretch(0,1)
         self.layout.setColumnStretch(1,1)
