@@ -3,6 +3,7 @@ from systemen_detecties_frame import SystemenDetecties
 from meldinglijst_frame import MeldingLijst
 from primaire_bediening import PrimaireBediening
 from overzichts_plattegrond import OverzichtsPlattegrond
+from data_parse import DataParser
 
 #   TODO
 #   Afsluitbomen
@@ -42,6 +43,7 @@ class DashboardFrame(QFrame):
         self.overzichts_plattegrond = OverzichtsPlattegrond()
         self.melding_lijst = MeldingLijst()
         self.systemen_detecties = SystemenDetecties()
+        self.data_parser = DataParser()
 
         self.primaire_bediening.setMinimumSize(400,400)
         self.overzichts_plattegrond.setMinimumSize(400,400)
