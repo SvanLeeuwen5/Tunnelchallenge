@@ -16,7 +16,7 @@ class mainwindow(QWidget):
     def __init__(self):
         super(mainwindow, self).__init__()
         self.lastSize = self.size()
-        #self.data = DataParser()
+        self.data = DataParser()
         self.initUI()
         self.createLayout()
         self.addPages()
@@ -81,37 +81,49 @@ class mainwindow(QWidget):
         self.timer.start(1000) 
 
     def refreshData(self):
-            #VERLICHTING
+        # VERLICHTING 
+        # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[0]) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[2])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[3])
-            #CCTV
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[0]['level']) 
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1]['capacity'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[3]['light_hours'])
+        
+        # CCTV
+        # {id, pan, tilt, zoom, preset}
         cctv = self.data.cctv_state
-        self.camera_window.controlpanel.panel_camera1.option_slider_pan.setValue(cctv[0])
-        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.setValue(cctv[1])
-        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.setValue(cctv[2])
-        self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv[3])
-            #VRI
+        self.camera_window.controlpanel.panel_camera1.option_slider_pan.setValue(cctv[0]['pan'])
+        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.setValue(cctv[0]['tilt'])
+        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.setValue(cctv[0]['zoom'])
+        self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv[0]['preset'])
+       
+        # VRI 
+        # {id, available_state, error_state, state}
         vri = self.data.vri_state
-        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri[0])
-        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri[1])
-        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri[2])
-            #BARRIER
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri[0]['state'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri[0]['available_state'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri[0]['error_state'])
+       
+        # BARRIER 
+        # {id, state, available_state, movement_state, obstacle_state, error_state}
         barrier = self.data.barrier_state
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier[0])
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier[1])
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.movement.setWaarde(barrier[2])
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.obstacle.setWaarde(barrier[3])
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.error.setWaarde(barrier[4])
-            #MATRIX
+        status_barrier = barrier[0]['state']
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier[0]['state'])
+        if status_barrier == "up":
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Open")
+        else:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier[1]['available_state'])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.movement.setWaarde(barrier[0]['movement_state'])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.obstacle.setWaarde(barrier[0]['obstacle_state'])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.error.setWaarde(barrier[0]['error_state'])
+
+        # MATRIX 
+        # {id, state, available_state, flashing_state, error_state}
         matrix = self.data.msi_state
-        self.dashboard_window.overzichts_plattegrond.matrix1.matrixbord.setStatus(matrix[0])
-        self.dashboard_window.overzichts_plattegrond.matrix2.matrixbord.setStatus(matrix[1])
-        self.dashboard_window.overzichts_plattegrond.matrix3.matrixbord.setStatus(matrix[2])
-        self.dashboard_window.overzichts_plattegrond.matrix4.matrixbord.setStatus(matrix[3])
-            #SENSOR
+        self.dashboard_window.overzichts_plattegrond.matrix1.matrixbord.setStatus(matrix[0]['state'])
+ 
+        #SENSOR
         #sensor = self.data.sensor_state
         #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO.setWaarde(barrier[0])
         #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO2.setWaarde(barrier[1])
@@ -151,31 +163,30 @@ class mainwindow(QWidget):
 
     def openSlagboom(self):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.isChecked() == False:
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Open")
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(False)
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(True)
+            slagboomBarrier = self.data.barrier_state
+            if slagboomBarrier[0] == "up":
+                self.data.Control_Barrier(0,'up')
+                self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(False)
+                self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(True)
         else:
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setChecked(False)
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(False)
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(True)
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Open")
-        #barrier = self.data.barrier_state
-        #if barrier[0] == 1:
-            #self.data.Control_Barrier(0,'up')
 
     def closeSlagboom(self):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.isChecked() == False:
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(False)
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(True)
+            slagboomBarrier = self.data.barrier_state
+            if slagboomBarrier[0] == "down":
+                self.data.Control_Barrier(0,'down')
+                self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")
+                self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(False)
+                self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(True)
         else:
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setChecked(False)
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")  
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(False)
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(True)     
-        #barrier = self.data.barrier_state
-        #if barrier[0] == 0:
-            #self.data.Control_Barrier(0,'down')
 
     def changeTunnelState(self):
         index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndex()
