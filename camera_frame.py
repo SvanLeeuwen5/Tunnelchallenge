@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QGridLayout, QFrame, QVBoxLayout, QSlider
+from PyQt6.QtWidgets import QGridLayout, QFrame, QVBoxLayout, QSlider, QPushButton
 from PyQt6.QtCore import Qt
 from font import FontLabel
 import vlc
@@ -70,6 +70,10 @@ class CameraPanel(QFrame):
         self.option_label_preset = FontLabel(f'Preset { self.option_slider_preset.value() }', 12, False)
         self.option_slider_preset.valueChanged.connect(self.updateLabel)
 
+
+        self.confirm_button = QPushButton("Confirm")
+
+
         self.options_layout.addWidget(self.option_label_pan,0,0)
         self.options_layout.addWidget(self.option_slider_pan,0,1)
         self.options_layout.addWidget(self.option_label_tilt,1,0)
@@ -78,6 +82,7 @@ class CameraPanel(QFrame):
         self.options_layout.addWidget(self.option_slider_zoom,2,1)
         self.options_layout.addWidget(self.option_label_preset,3,0)
         self.options_layout.addWidget(self.option_slider_preset,3,1)
+        self.options_layout.addWidget(self.confirm_button,4,1)
 
         self.layout.addWidget(self.camera_label)
         self.layout.addWidget(self.options_frame)
