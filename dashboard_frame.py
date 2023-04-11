@@ -43,7 +43,6 @@ class DashboardFrame(QFrame):
         self.overzichts_plattegrond = OverzichtsPlattegrond()
         self.melding_lijst = MeldingLijst()
         self.systemen_detecties = SystemenDetecties()
-        self.data_parser = DataParser()
 
         self.primaire_bediening.setMinimumSize(400,400)
         self.overzichts_plattegrond.setMinimumSize(400,400)

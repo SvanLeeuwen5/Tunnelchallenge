@@ -16,7 +16,7 @@ class mainwindow(QWidget):
     def __init__(self):
         super(mainwindow, self).__init__()
         self.lastSize = self.size()
-        self.data = DataParser()
+        #self.data = DataParser()
         self.initUI()
         self.createLayout()
         self.addPages()
@@ -141,7 +141,8 @@ class mainwindow(QWidget):
         # MATRIX 
         # {id, state, available_state, flashing_state, error_state}
         matrix = self.data.msi_state
-        self.dashboard_window.overzichts_plattegrond.matrix1.matrixbord.setStatus(matrix[0]['state'])
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'])
+
  
         #SENSOR
         #sensor = self.data.sensor_state
