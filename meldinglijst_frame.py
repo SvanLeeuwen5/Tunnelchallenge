@@ -96,17 +96,17 @@ class MeldingLijstTableFrame(QFrame):
         table_layout.setContentsMargins(0,0,0,0)
         self.setStyleSheet("QFrame {border-radius : 0px; border-bottom-right-radius : 4px;border-bottom-left-radius : 4px;}")
 
-        verlichting1 = VerlichtingFrame("Lamp 1")
-        verlichting2 = VerlichtingFrame("Lamp 2")
-        verlichting3 = VerlichtingFrame("Lamp 3")
-        verlichting4 = VerlichtingFrame("Lamp 4")
-        verlichting5 = VerlichtingFrame("Lamp 5")
+        self.verlichting1 = VerlichtingFrame("Lamp 1")
+        self.verlichting2 = VerlichtingFrame("Lamp 2")
+        self.verlichting3 = VerlichtingFrame("Lamp 3")
+        self.verlichting4 = VerlichtingFrame("Lamp 4")
+        self.verlichting5 = VerlichtingFrame("Lamp 5")
 
-        table_layout.addWidget(verlichting1)
-        table_layout.addWidget(verlichting2)
-        table_layout.addWidget(verlichting3)
-        table_layout.addWidget(verlichting4)
-        table_layout.addWidget(verlichting5)
+        table_layout.addWidget(self.verlichting1)
+        table_layout.addWidget(self.verlichting2)
+        table_layout.addWidget(self.verlichting3)
+        table_layout.addWidget(self.verlichting4)
+        table_layout.addWidget(self.verlichting5)
 
 class MeldingLijstButtonFrame(QFrame):
     def __init__(self):

@@ -84,30 +84,31 @@ class mainwindow(QWidget):
         # VERLICHTING 
         # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[0]['level']) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[0]['capacity'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[0]['energy_usage'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[0]['light_hours'])
-        
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[1]['level']) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1]['capacity'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[1]['energy_usage'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[1]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.niveau.setWaarde(verlichting[0]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.capaciteit.setWaarde(verlichting[0]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.energieverbruik.setWaarde(verlichting[0]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.branduren.setWaarde(verlichting[0]['light_hours'])
 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[2]['level']) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[2]['capacity'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[2]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.niveau.setWaarde(verlichting[1]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.capaciteit.setWaarde(verlichting[1]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.energieverbruik.setWaarde(verlichting[1]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.branduren.setWaarde(verlichting[1]['light_hours'])
 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[3]['level']) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[3]['capacity'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[3]['energy_usage'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[3]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.niveau.setWaarde(verlichting[2]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.capaciteit.setWaarde(verlichting[2]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.branduren.setWaarde(verlichting[2]['light_hours'])
 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[4]['level']) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[4]['capacity'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[4]['energy_usage'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[4]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.niveau.setWaarde(verlichting[3]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.capaciteit.setWaarde(verlichting[3]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.energieverbruik.setWaarde(verlichting[3]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.branduren.setWaarde(verlichting[3]['light_hours'])
+
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.niveau.setWaarde(verlichting[4]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.capaciteit.setWaarde(verlichting[4]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.energieverbruik.setWaarde(verlichting[4]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.branduren.setWaarde(verlichting[4]['light_hours'])
+
         # CCTV
         # {id, pan, tilt, zoom, preset}
         cctv = self.data.cctv_state
