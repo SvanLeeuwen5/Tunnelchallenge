@@ -5,7 +5,7 @@ import websockets
 class DataParser:
     
     def __init__(self):
-        self.ipaddress = "ws://213.93.142.164:8080"
+        self.ipaddress = "ws://213.93.142.164:8084"
         #self.ipaddress = "ws://128.64.32.35:8081"
         self.websocket = None
         self.sos_state = []
@@ -14,6 +14,7 @@ class DataParser:
         self.vri_state = []
         self.barrier_state = []
         self.msi_state = []
+        self.calamity_state = []
         asyncio.run(self.UpdateAllStatusses())
 
     async def UpdateAllStatusses(self):
@@ -24,6 +25,7 @@ class DataParser:
         await self.UpdateStatus_VRI()
         await self.UpdateStatus_Barrier()
         await self.UpdateStatus_MSI()
+        await self.UpdateStatus_Calamity()
 
     # TODO
     #############
@@ -53,17 +55,25 @@ class DataParser:
         return self.ResponseIsSuccesful(await self.send_command(control_command))
 
     # command (string): off red_cross green_arrow arrow_left arrow_right end_limitation 50 60 70 80 90 100  id (int): 0 1
-    async def Control_MSI(self, id, command):
+    async def Control_MSI(self, command):
         control_command = {"id": id ,"action": "command", "lfv": "msi", "command": command}
+        return self.ResponseIsSuccesful(await self.send_command(control_command))
+    
+    # command (string): ghost_rider stationary_vehicle emergency_on emergency_off
+    async def Control_Calamity(self, command):
+        control_command = {"action": "command", "lfv": "calamity", "command": command}
         return self.ResponseIsSuccesful(await self.send_command(control_command))
 
     # Retrieving Status Commando's
 
+    #TODO
+    #######################
     # server returns a json object for every "SOS"
     # sos_state: array of objects of the form: { ? }
     async def UpdateStatus_SOS(self):
         command = {"action": "status", "lfv": "sos"}
         self.sos_state = [await self.send_command(command)["data"]]
+    ########################
 
     # server returns a json object for every camera
     # sos_state: array of objects of the form: {id, pan, tilt, zoom, preset}
@@ -82,7 +92,6 @@ class DataParser:
     async def UpdateStatus_VRI(self):
         command = {"action": "status", "lfv": "vri"}
         self.vri_state = [await self.send_command(command)["data"]]
-        #[d["state"] for d in json_obj["data"]] provides vri_state in the form: [ 'state', 'state', 'state', 'state']
 
     # server returns a json object for every barrier
     # barrier_state: array of objects of the form: {id, state, available_state, movement_state, obstacle_state, error_state}
@@ -96,6 +105,12 @@ class DataParser:
         command = {"action": "status", "lfv": "msi"}
         self.msi_state = [await self.send_command(command)["data"]]       
 
+    # server returns a json object for calamity
+    # msi_state: array of objects of the form: {id, calamity_description}
+    async def UpdateStatus_Calamity(self):
+        command = {"action": "status", "lfv": "calamity"}
+        self.calamity_state = [await self.send_command(command)["data"]]
+
     # function that executes a given command and returns the response
     async def send_command(self, command):
         await self.websocket.send(json.dumps(command))
@@ -106,15 +121,8 @@ class DataParser:
     def ResponseIsSuccesful(self, response):
         return (response.get("status") == "success")
 
-
-
 # Testcode below
 
 #c = DataParser()
-#c.Control_Barrier(0, "down")
-#print(c.barrier_state)
-# c = DataParser()
-# response = { "status": "success", "data": {"message": "Command sent."}}
-# message = response["data"]["message"]
-# print(message)
-# print(c.ResponseIsSuccesful(response))
+#c.UpdateStatus_Calamity()
+#print(c.calamity_state)
