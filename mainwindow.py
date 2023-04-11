@@ -150,24 +150,15 @@ class mainwindow(QWidget):
         #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.NO2.setWaarde(barrier[2])
 
     def connectCameraSliders(self):
-        self.camera_window.controlpanel.panel_camera1.option_slider_pan.valueChanged.connect(self.changePan)
-        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.valueChanged.connect(self.changeTilt)
-        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.valueChanged.connect(self.changeZoom)
-        self.camera_window.controlpanel.panel_camera1.option_slider_preset.valueChanged.connect(self.changePreset)
+        self.camera_window.controlpanel.panel_camera1.confirm_button.clicked.connect(self.changeCamera)
 
-    def changePan(self):
+    def changeCamera(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
         #self.data.Control_CCTV(0,'change_pan',self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
-
-    def changeTilt(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value())
         #self.data.Control_CCTV(0,'change_tilt',self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value())
-
-    def changeZoom(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
         #self.data.Control_CCTV(0,'change_zoom',self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
-
-    def changePreset(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
         #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
 
