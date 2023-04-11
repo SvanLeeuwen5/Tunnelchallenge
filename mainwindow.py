@@ -170,6 +170,12 @@ class mainwindow(QWidget):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.noodstop.clicked.connect(self.noodStop)
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndexChanged.connect(self.changeTunnelState)
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndexChanged.connect(self.changeStoplichtState)
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_status.currentIndexChanged.connect(self.updateMatrix)
+
+    def updateMatrix(self):
+        list = ["off", "red_cross", "green_arrow", "arrow_left", "arrow_right", "end_limitation", "50", "60", "70", "80", "90", "100"]
+        index = self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_status.currentIndex()
+        self.data.Control_MSI(0, list[index])
 
     def noodStop(self):
         pass
