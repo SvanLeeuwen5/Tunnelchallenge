@@ -68,13 +68,14 @@ class VerlichtingFrame(QFrame):
         self.layout.setSpacing(0)
         self.setLayout(self.layout)  
         self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
-        self.label = FontLabel(text, 10, False)
+        self.label = FontLabel(text, 12, True)
+        self.label.setStyleSheet("FontLabel {padding : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px; border-radius : 4px; border-bottom : 2px solid black;}")
         self.setters = VerlichtingSystemenDetectiesDetailsSet()
         self.niveau = SystemenDetectiesDetailsWaardeLabel("Niveau")
         self.capaciteit = SystemenDetectiesDetailsWaardeLabel("Capaciteit")
         self.energieverbruik = SystemenDetectiesDetailsWaardeLabel("Energieverbruik")
         self.branduren = SystemenDetectiesDetailsWaardeLabel("Branduren")
-        self.branduren.setStyleSheet("QFrame {padding-left : 10px; padding-right : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px; border-radius : 0px; border-bottom : 2px solid black;}"
+        self.branduren.setStyleSheet("QFrame {padding-left : 10px; padding-right : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px;}"
                                   "FontLabel {padding : 2px; color : #b2b2b2; background-color: #4c575b; border : 0px;}")
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.setters)
@@ -93,6 +94,7 @@ class MeldingLijstTableFrame(QFrame):
         self.setContentsMargins(0,0,0,0)
         table_layout.setSpacing(0)
         table_layout.setContentsMargins(0,0,0,0)
+        self.setStyleSheet("QFrame {border-radius : 0px; border-bottom-right-radius : 4px;border-bottom-left-radius : 4px;}")
 
         verlichting1 = VerlichtingFrame("Lamp 1")
         verlichting2 = VerlichtingFrame("Lamp 2")
@@ -116,8 +118,8 @@ class MeldingLijstButtonFrame(QFrame):
         meldinglijst_label = FontLabel("Verlichting",14, True)
         self.setStyleSheet("FontLabel {padding : 4px; border-bottom: 1px solid white;border-radius: 0px;}")
 
-        button_layout.addWidget(meldinglijst_label, alignment=Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignBottom)
-        button_layout.addItem(self.horizontalSpacer)
+        button_layout.addWidget(meldinglijst_label)#, alignment=Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignBottom)
+        #button_layout.addItem(self.horizontalSpacer)
 
 
 class MeldingLijst(QFrame):
