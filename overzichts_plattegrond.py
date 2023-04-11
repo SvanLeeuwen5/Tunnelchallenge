@@ -36,7 +36,7 @@ class MatrixFrame(QFrame):
         self.label = QLabel()
         self.setFlash(flashstatus)
 
-        self.matrixbord = Matrixbord(status)
+        self.matrixbord = Matrixbord(self, status)
         self.matrixBesturing =BesturingFrame()
         
         self.layout.addLayout(self.hLayout,0,0)
@@ -55,44 +55,56 @@ class MatrixFrame(QFrame):
             self.hLayout.addWidget(self.label)
 
 class Matrixbord(QFrame):
-    def __init__(self, status):
+    def __init__(self, parent, status):
         super().__init__()
+        self.parent = parent
         self.setFixedSize(160, 160)
         self.setStyleSheet("QFrame {color : #b2b2b2; background-color: #2c2c2c ;border-radius: 5px;}")
         self.layout = QVBoxLayout()
         self.layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.label = QLabel()
+        self.label = FontLabel("", 60, True)
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.setStatus(status)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
 
-    def setStatus(self, status):   
+    def setStatus(self, status, flash="off"): 
+        self.parent.setFlash(flash)
         if status == "red_cross":
+            self.label.setText("")
             self.icon = QIcon('icons/red-cross')
             self.label.setPixmap(self.icon.pixmap(160, 160))
         elif status == "green_arrow":
+            self.label.setText("")
             self.icon = QIcon('icons/green-arrow')
             self.label.setPixmap(self.icon.pixmap(160, 160))
         elif status == "arrow_left":
+            self.label.setText("")
             self.icon = QIcon('icons/arrow-left')
             self.label.setPixmap(self.icon.pixmap(160, 160))
         elif status == "arrow_right":
+            self.label.setText("")
             self.icon = QIcon('icons/arrow-right')
             self.label.setPixmap(self.icon.pixmap(160, 160))
         elif status == "end_limitation":
+            self.label.setText("")
             self.icon = QIcon('icons/end-signal')
             self.label.setPixmap(self.icon.pixmap(160, 160))
         elif status == "50":
-            self.label = FontLabel("50", 60, True)
+            self.label.setPixmap(QPixmap())
+            self.label.setText("100")
         elif status == "70":
-            self.label = FontLabel("70", 60, True)
+            self.label.setPixmap(QPixmap())
+            self.label.setText("100")
         elif status == "80":
-            self.label = FontLabel("80", 60, True)
+            self.label.setPixmap(QPixmap())
+            self.label.setText("100")
         elif status == "90":
-            self.label = FontLabel("90", 60, True)
+            self.label.setPixmap(QPixmap())
+            self.label.setText("100")
         elif status == "100":
-            self.label = FontLabel("100", 60, True)
+            self.label.setPixmap(QPixmap())
+            self.label.setText("100")
         
         self.label.setStyleSheet("color: white; font: bold;")
 

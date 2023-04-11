@@ -26,6 +26,7 @@ class mainwindow(QWidget):
         self.connectMenuButtons()
         self.connectCameraSliders()
         self.connectPrimaireBediening()
+        
         self.changeStoplichtState()
         self.show()   
 
@@ -141,7 +142,7 @@ class mainwindow(QWidget):
         # MATRIX 
         # {id, state, available_state, flashing_state, error_state}
         matrix = self.data.msi_state
-        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'])
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'], matrix[0]["flasing_state"])
 
  
         #SENSOR
