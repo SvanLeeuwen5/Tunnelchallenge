@@ -301,8 +301,8 @@ class SystemenDetectiesList(QFrame):
         self.fold_details_sensoren = SystemenDetectiesFoldDetailsSensoren()        
         self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
 
-        self.layout.addWidget(self.fold_button_buis)
-        self.layout.addWidget(self.fold_details_buis)
+        #self.layout.addWidget(self.fold_button_buis)
+        #self.layout.addWidget(self.fold_details_buis)
         self.layout.addWidget(self.fold_button_verkeer)
         self.layout.addWidget(self.fold_details_verkeer)
         self.layout.addWidget(self.fold_button_sensoren)
@@ -360,7 +360,7 @@ class SystemenDetectiesFrame(QFrame):
         self.sensor1_details = SensorSystemenDetectiesDetails("Luchtsensor")
 
         self.layout.addWidget(self.systemen_detecties_list)
-        self.layout.addWidget(self.verlichting_details)
+        #self.layout.addWidget(self.verlichting_details)
         self.layout.addWidget(self.slagboom_details)
         self.layout.addWidget(self.verkeerslicht_details)
         self.layout.addWidget(self.sensor1_details)
