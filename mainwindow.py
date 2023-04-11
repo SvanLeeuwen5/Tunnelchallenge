@@ -26,7 +26,7 @@ class mainwindow(QWidget):
         self.connectMenuButtons()
         self.connectCameraSliders()
         self.connectPrimaireBediening()
-        
+        self.connectVerlichtingBediening()
         self.changeStoplichtState()
         self.show()   
 
@@ -163,6 +163,33 @@ class mainwindow(QWidget):
         #self.data.Control_CCTV(0,'change_zoom',self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
         print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
         #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+
+    def connectVerlichtingBediening(self):
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setStand.currentIndexChanged.connect(self.setStand)
+
+    def setStand(self):
+        self.data.Control_VRI(0, self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentText())
+        self.data.Control_VRI(1, self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentText())
+        self.data.Control_VRI(2, self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentText())
+        self.data.Control_VRI(3, self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setStand.currentText())
+        self.data.Control_VRI(4, self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setStand.currentText())
+
+    def setVerlichting(self):
+        self.data.Control_VRI(0, self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.isChecked())
+        self.data.Control_VRI(1, self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setAuto.isChecked())
+        self.data.Control_VRI(2, self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setAuto.isChecked())
+        self.data.Control_VRI(3, self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setAuto.isChecked())
+        self.data.Control_VRI(4, self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setAuto.isChecked())
+
 
     def connectPrimaireBediening(self):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.clicked.connect(self.openSlagboom)
