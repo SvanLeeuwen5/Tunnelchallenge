@@ -85,10 +85,29 @@ class mainwindow(QWidget):
         # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
         self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[0]['level']) 
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1]['capacity'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
-        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[3]['light_hours'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[0]['capacity'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[0]['energy_usage'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[0]['light_hours'])
         
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[1]['level']) 
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1]['capacity'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[1]['energy_usage'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[1]['light_hours'])
+
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[2]['level']) 
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[2]['capacity'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[2]['light_hours'])
+
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[3]['level']) 
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[3]['capacity'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[3]['energy_usage'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[3]['light_hours'])
+
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[4]['level']) 
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[4]['capacity'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.energieverbruik.setWaarde(verlichting[4]['energy_usage'])
+        self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.branduren.setWaarde(verlichting[4]['light_hours'])
         # CCTV
         # {id, pan, tilt, zoom, preset}
         cctv = self.data.cctv_state
@@ -113,7 +132,7 @@ class mainwindow(QWidget):
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Open")
         else:
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")
-        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier[1]['available_state'])
+        self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.beschikbaarheid.setWaarde(barrier[0]['available_state'])
         self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.movement.setWaarde(barrier[0]['movement_state'])
         self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.obstacle.setWaarde(barrier[0]['obstacle_state'])
         self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.error.setWaarde(barrier[0]['error_state'])
