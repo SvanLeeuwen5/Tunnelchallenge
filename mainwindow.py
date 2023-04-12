@@ -7,6 +7,7 @@ from dashboard_frame import DashboardFrame
 from login_frame import LoginFrame
 from data_parse import DataParser
 import sys
+import requests
 
 class mainwindow(QWidget):
     """
@@ -118,10 +119,15 @@ class mainwindow(QWidget):
         #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.NO2.setWaarde(barrier[2])
 
     def connectCameraSliders(self):
+<<<<<<< Updated upstream
         self.camera_window.controlpanel.panel_camera1.option_slider_pan.valueChanged.connect(self.changePan)
         self.camera_window.controlpanel.panel_camera1.option_slider_tilt.valueChanged.connect(self.changeTilt)
         self.camera_window.controlpanel.panel_camera1.option_slider_zoom.valueChanged.connect(self.changeZoom)
         self.camera_window.controlpanel.panel_camera1.option_slider_preset.valueChanged.connect(self.changePreset)
+=======
+        self.camera_window.controlpanel.panel_camera1.confirm_button.clicked.connect(self.changeCamera)
+        self.camera_window.controlpanel.panel_camera2.confirm_button.clicked.connect(self.changeCamera)
+>>>>>>> Stashed changes
 
     def changePan(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
@@ -137,6 +143,22 @@ class mainwindow(QWidget):
 
     def changePreset(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 0:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Home&camera=1")
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 1:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Ingang&camera=1")
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 2:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Uitgang&camera=1")
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 3:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Podium&camera=1")
+        if self.camera_window.controlpanel.panel_camera2.option_slider_preset.value() == 0:
+            requests.get("http://192.168.10.99/axis-cgi/com/ptz.cgi?gotoserverpresetname=Home&camera=1")
+        if self.camera_window.controlpanel.panel_camera2.option_slider_preset.value() == 1:
+            requests.get("http://192.168.10.99/axis-cgi/com/ptz.cgi?gotoserverpresetname=Ingang&camera=1")
+        if self.camera_window.controlpanel.panel_camera2.option_slider_preset.value() == 2:
+            requests.get("http://192.168.10.99/axis-cgi/com/ptz.cgi?gotoserverpresetname=Uitgang&camera=1")
+        if self.camera_window.controlpanel.panel_camera2.option_slider_preset.value() == 3:
+            requests.get("http://192.168.10.99/axis-cgi/com/ptz.cgi?gotoserverpresetname=Tafeltje&camera=1")
         #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
 
     def connectPrimaireBediening(self):
