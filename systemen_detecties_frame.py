@@ -40,7 +40,7 @@ class SystemenDetectiesDetailsWaardeLabel(QFrame):
         self.setLayout(self.layout) 
 
     def setWaarde(self, waarde):
-        self.waarde.setText(waarde)
+        self.waarde.setText(str(waarde))
 
 class VerlichtingSystemenDetectiesDetailsSet(QFrame):
     def __init__(self):
@@ -139,7 +139,7 @@ class SensorSystemenDetectiesDetails(SystemenDetectiesDetails):
         self.verticalstrech = QSpacerItem(0,0,QSizePolicy.Policy.Minimum,QSizePolicy.Policy.Expanding)
         self.state = SystemenDetectiesDetailsWaardeLabel("State")
         self.CO = SystemenDetectiesDetailsWaardeLabel("CO")
-        self.CO2 = SystemenDetectiesDetailsWaardeLabel("CO2")
+        self.CO2 = SystemenDetectiesDetailsWaardeLabel("temperature")
         self.error = SystemenDetectiesDetailsWaardeLabel("Error")
         self.error.setStyleSheet("QFrame {padding-left : 10px; padding-right : 10px; color : #b2b2b2; background-color: #4c575b; border : 0px;border-bottom : 2px solid black;}"
                                   "FontLabel {padding : 2px; color : #b2b2b2; background-color: #4c575b; border : 0px;}")

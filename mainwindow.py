@@ -89,30 +89,30 @@ class mainwindow(QWidget):
         # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
         print(verlichting)
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.niveau.setWaarde(verlichting[0]['level'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.capaciteit.setWaarde(verlichting[0]['capacity'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.energieverbruik.setWaarde(verlichting[0]['energy_usage'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.branduren.setWaarde(verlichting[0]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.niveau.setWaarde(verlichting[5]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.capaciteit.setWaarde(verlichting[5]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.energieverbruik.setWaarde(verlichting[5]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.branduren.setWaarde(verlichting[5]['light_hours'])
 
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.niveau.setWaarde(verlichting[1]['level'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.capaciteit.setWaarde(verlichting[1]['capacity'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.energieverbruik.setWaarde(verlichting[1]['energy_usage'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.branduren.setWaarde(verlichting[1]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.niveau.setWaarde(verlichting[4]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.capaciteit.setWaarde(verlichting[4]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.energieverbruik.setWaarde(verlichting[4]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.branduren.setWaarde(verlichting[4]['light_hours'])
 
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.niveau.setWaarde(verlichting[2]['level'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.capaciteit.setWaarde(verlichting[2]['capacity'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.branduren.setWaarde(verlichting[2]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.niveau.setWaarde(verlichting[3]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.capaciteit.setWaarde(verlichting[3]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.energieverbruik.setWaarde(verlichting[3]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.branduren.setWaarde(verlichting[3]['light_hours'])
 
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.niveau.setWaarde(verlichting[3]['level'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.capaciteit.setWaarde(verlichting[3]['capacity'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.energieverbruik.setWaarde(verlichting[3]['energy_usage'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.branduren.setWaarde(verlichting[3]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.niveau.setWaarde(verlichting[2]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.capaciteit.setWaarde(verlichting[2]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.energieverbruik.setWaarde(verlichting[2]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.branduren.setWaarde(verlichting[2]['light_hours'])
 
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.niveau.setWaarde(verlichting[4]['level'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.capaciteit.setWaarde(verlichting[4]['capacity'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.energieverbruik.setWaarde(verlichting[4]['energy_usage'])
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.branduren.setWaarde(verlichting[4]['light_hours'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.niveau.setWaarde(verlichting[1]['level'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.capaciteit.setWaarde(verlichting[1]['capacity'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.energieverbruik.setWaarde(verlichting[1]['energy_usage'])
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.branduren.setWaarde(verlichting[1]['light_hours'])
 
         # CCTV
         # {id, pan, tilt, zoom, preset}
@@ -146,16 +146,23 @@ class mainwindow(QWidget):
         # MATRIX 
         # {id, state, available_state, flashing_state, error_state}
         matrix = self.data.msi_state
-        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'], matrix[0]["flashing"])
-
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'])
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setFlash( matrix[0]["flashing"])
         ##verkeerlischt
+        print(self.data.vri_state[0]['state'])
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.changeStoplichtStatus(self.data.vri_state[0]['state'])
  
         #SENSOR
-        #sensor = self.data.sensor_state
-        #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO.setWaarde(barrier[0])
-        #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO2.setWaarde(barrier[1])
-        #self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.NO2.setWaarde(barrier[2])
+        sensor = self.data.sensor_state
+        print(sensor)
+        self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO.setWaarde(sensor[0]['co'])
+        self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.CO2.setWaarde(sensor[0]['temperature'])
+        # self.dashboard_window.systemen_detecties.rijbaan1.sensor1_details.NO2.setWaarde(barrier[2])
+
+        if self.data.calamity_state[0]['calamity']:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.noodstop.setChecked(True) 
+        else:
+            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.noodstop.setChecked(False)
 
     def connectCameraSliders(self):
         self.camera_window.controlpanel.panel_camera1.confirm_button.clicked.connect(self.changeCamera)
@@ -189,8 +196,7 @@ class mainwindow(QWidget):
 
     def setStand(self):
         v1 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentText().replace('%', '')
-        print(str(int(v1)/10))
-        asyncio.run(self.data.Control_Lighting(0, '4'))
+        asyncio.run(self.data.Control_Lighting(0, str(int(v1)/10)))
         v2 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentText().replace('%', '')
         asyncio.run(self.data.Control_Lighting(1, str(int(v2)/10)))
         v3 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentText().replace('%', '')
@@ -225,18 +231,17 @@ class mainwindow(QWidget):
         self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_flashStatus.currentIndexChanged.connect(self.updateFlash)
 
     def updateMatrix(self):
-        list = ["off", "red_cross", "green_arrow", "arrow_left", "arrow_right", "end_limitation", "50", "60", "70", "80", "90", "100"]
+        list = ["off", "red_cross", "gren_arrow", "arrow_left", "arrow_right", "end_limitation", "50", "70", "80", "90", "100"]
         index = self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_status.currentIndex()
         asyncio.run(self.data.Control_MSI(list[index]))
 
     def updateFlash(self):
-        list = ["off", "on"]
+        list = ["flashOn", "flashOff"]
         index = self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_flashStatus.currentIndex()
         asyncio.run(self.data.Control_MSI(list[index]))
 
-
     def noodStop(self):
-        pass
+        asyncio.run(self.data.Control_Calamity("emergency_off"))
 
     def openSlagboom(self):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.isChecked() == False:

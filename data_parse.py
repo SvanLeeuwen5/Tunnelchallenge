@@ -14,6 +14,7 @@ class DataParser:
         self.barrier_state = []
         self.msi_state = []
         self.calamity_state = []
+        self.sensor_state = []
         asyncio.run(self.UpdateAllStatusses())
 
     async def UpdateAllStatusses(self):
@@ -23,6 +24,7 @@ class DataParser:
         await self.UpdateStatus_Barrier()
         await self.UpdateStatus_MSI()
         await self.UpdateStatus_Calamity()
+        await self.UpdateStatus_Sensor()
 
     # Control Commands
 
@@ -53,7 +55,7 @@ class DataParser:
     
     # command (string): ghost_rider stationary_vehicle emergency_on emergency_off
     async def Control_Calamity(self, command):
-        control_command = {"action": "command", "lfv": "calamity", "command": command}
+        control_command = {"action": "command", "lfv": "calamity", "command": command, "id": 0, "new_value":0}
         return self.ResponseIsSuccesful(await self.send_command(control_command))
 
     # Retrieving Status Commands
@@ -100,12 +102,20 @@ class DataParser:
         result = (await self.send_command(command))
         self.calamity_state = result["data"]
 
+    async def UpdateStatus_Sensor(self):
+        command = {"action": "status", "lfv": "sensoren"}
+        result = (await self.send_command(command))
+        self.sensor_state = result["data"]   
+
     # function that executes a given command and returns the response
     async def send_command(self, command):
-        async with websockets.connect(self.ipaddress) as websocket:
-            await websocket.send(json.dumps(command))
-            json_string = await websocket.recv()
-            return json.loads(json_string)
+        try:
+            async with websockets.connect(self.ipaddress) as websocket:
+                await websocket.send(json.dumps(command))
+                json_string = await websocket.recv()
+                return json.loads(json_string)
+        except:
+            print('Max zet de server aan')
     
     # return true when response status code equals 'success'
     def ResponseIsSuccesful(self, response):

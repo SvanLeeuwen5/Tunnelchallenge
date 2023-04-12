@@ -37,7 +37,7 @@ class MatrixFrame(QFrame):
         self.layout.addWidget(self.matrixBesturing,1,1)
 
 class Matrixbord(QFrame):
-    def __init__(self, parent, status, flash):
+    def __init__(self, parent, status, flash="flashOff"):
         super().__init__()
         self.parent = parent
         self.setFixedSize(160, 160)
@@ -64,7 +64,7 @@ class Matrixbord(QFrame):
         self.flashLabel3.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.flashLabel4 = FontLabel("", 10, True)
         self.flashLabel4.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.setStatus(status, flash)
+        self.setStatus(status)
         
         self.layout.addWidget(self.flashLabel1,0,0)
         self.layout.addWidget(self.flashLabel2,0,2)
@@ -77,7 +77,7 @@ class Matrixbord(QFrame):
         self.timer = QTimer()
         self.circle = QIcon('icons/circle_orange')
 
-        if status == "on": #Flash On    
+        if status == "flashOn": #Flash On    
             self.flashLabel1.setPixmap(QPixmap(self.circle.pixmap(20,20)))
             self.flashLabel2.setPixmap(QPixmap(self.circle.pixmap(20,20)))
             self.flashLabel3.setPixmap(QPixmap())
@@ -85,7 +85,7 @@ class Matrixbord(QFrame):
             self.timer.timeout.connect(self.ToggleDown)
             self.timer.start(1000)
         
-        if status == "off": #Flash Off
+        if status == "flashOff": #Flash Off
             self.timer.stop
             self.flashLabel1.setPixmap(QPixmap())
             self.flashLabel2.setPixmap(QPixmap())
@@ -107,13 +107,13 @@ class Matrixbord(QFrame):
         self.flashLabel4.setPixmap(QPixmap(self.circle.pixmap(20,20)))
         self.timer.timeout.connect(self.ToggleUp)
 
-    def setStatus(self, status, flash="off"): 
-        self.setFlash(flash)
+    def setStatus(self, status): 
+        self.setFlash(status)
         if status == "red_cross":
             self.label.setText("")
             self.icon = QIcon('icons/red-cross')
             self.label.setPixmap(QPixmap(self.icon.pixmap(160,160)))
-        elif status == "green_arrow":
+        elif status == "gren_arrow":
             self.label.setText("")
             self.icon = QIcon('icons/green-arrow')
             self.label.setPixmap(QPixmap(self.icon.pixmap(160,160)))
