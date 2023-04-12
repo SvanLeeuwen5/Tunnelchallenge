@@ -1,3 +1,4 @@
+import asyncio
 from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout
 from PyQt6.QtCore import QMargins, QTimer
 from PyQt6.QtGui import QPixmap
@@ -16,12 +17,12 @@ class mainwindow(QWidget):
     def __init__(self):
         super(mainwindow, self).__init__()
         self.lastSize = self.size()
-        #self.data = DataParser()
+        self.data = DataParser()
         self.initUI()
         self.createLayout()
         self.addPages()
         self.dashboardActive()
-        #self.refreshData()
+        self.refreshData()
         #self.setTimer()
         self.connectMenuButtons()
         self.connectCameraSliders()
@@ -78,10 +79,12 @@ class mainwindow(QWidget):
     def setTimer(self):
         self.timer = QTimer()
         self.timer.timeout.connect(self.refreshData)
-        self.timer.start(1000) 
+        self.timer.start(2000) 
 
     def refreshData(self):
-            #VERLICHTING
+        asyncio.run(self.data.UpdateAllStatusses())
+        # VERLICHTING 
+        # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
         self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.niveau.setWaarde(verlichting[0]) 
         self.dashboard_window.systemen_detecties.rijbaan1.verlichting_details.capaciteit.setWaarde(verlichting[1])
@@ -138,6 +141,42 @@ class mainwindow(QWidget):
     def changePreset(self):
         print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
         #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+
+    def connectVerlichtingBediening(self):
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setAuto.clicked.connect(self.setVerlichting)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setStand.currentIndexChanged.connect(self.setStand)
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setStand.currentIndexChanged.connect(self.setStand)
+
+    def setStand(self):
+        v1 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentText().replace('%', '')
+        asyncio.run(self.data.Control_Lighting(0, str(int(v1)/10)))
+        v2 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentText().replace('%', '')
+        asyncio.run(self.data.Control_Lighting(1, str(int(v2)/10)))
+        v3 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentText().replace('%', '')
+        asyncio.run(self.data.Control_Lighting(2, str(int(v3)/10)))
+        v4 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setStand.currentText().replace('%', '')
+        asyncio.run(self.data.Control_Lighting(3, str(int(v4)/10)))
+        v5 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setStand.currentText().replace('%', '')
+        asyncio.run(self.data.Control_Lighting(4, str(int(v5)/10)))
+
+    def setVerlichting(self):
+        if self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.isChecked():
+            self.data.Control_Lighting(0, 'auto')
+        if self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setAuto.isChecked():
+            self.data.Control_Lighting(1, 'auto')
+        if self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setAuto.isChecked():
+            self.data.Control_Lighting(2, 'auto')
+        if self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setAuto.isChecked():
+            self.data.Control_Lighting(3, 'auto')
+        if self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setAuto.isChecked():
+            self.data.Control_Lighting(4, 'auto')
 
     def connectPrimaireBediening(self):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.clicked.connect(self.openSlagboom)
