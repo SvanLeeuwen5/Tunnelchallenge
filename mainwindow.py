@@ -7,6 +7,7 @@ from dashboard_frame import DashboardFrame
 from login_frame import LoginFrame
 from data_parse import DataParser
 import sys
+import asyncio, requests
 
 class mainwindow(QWidget):
     """
@@ -16,13 +17,13 @@ class mainwindow(QWidget):
     def __init__(self):
         super(mainwindow, self).__init__()
         self.lastSize = self.size()
-        #self.data = DataParser()
+        self.data = DataParser()
         self.initUI()
         self.createLayout()
         self.addPages()
         self.dashboardActive()
-        #self.refreshData()
-        #self.setTimer()
+        self.refreshData()
+        self.setTimer()
         self.connectMenuButtons()
         self.connectCameraSliders()
         self.connectPrimaireBediening()
@@ -79,13 +80,15 @@ class mainwindow(QWidget):
     def setTimer(self):
         self.timer = QTimer()
         self.timer.timeout.connect(self.refreshData)
-        self.timer.start(1000) 
+        self.timer.start(2000) 
 
     def refreshData(self):
+        asyncio.run(self.data.UpdateAllStatusses())
+
         # VERLICHTING 
         # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
-        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.niveau.setWaarde(verlichting[0]['level']+'%')
+        self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.niveau.setWaarde(verlichting[0]['level'])
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.capaciteit.setWaarde(verlichting[0]['capacity'])
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.energieverbruik.setWaarde(verlichting[0]['energy_usage'])
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.branduren.setWaarde(verlichting[0]['light_hours'])
@@ -112,15 +115,16 @@ class mainwindow(QWidget):
 
         # CCTV
         # {id, pan, tilt, zoom, preset}
-        cctv = self.data.cctv_state
-        self.camera_window.controlpanel.panel_camera1.option_slider_pan.setValue(cctv[0]['pan'])
-        self.camera_window.controlpanel.panel_camera1.option_slider_tilt.setValue(cctv[0]['tilt'])
-        self.camera_window.controlpanel.panel_camera1.option_slider_zoom.setValue(cctv[0]['zoom'])
-        self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv[0]['preset'])
+        #cctv = self.data.cctv_state
+        #self.camera_window.controlpanel.panel_camera1.option_slider_pan.setValue(cctv[0]['pan'])
+        #self.camera_window.controlpanel.panel_camera1.option_slider_tilt.setValue(cctv[0]['tilt'])
+        #self.camera_window.controlpanel.panel_camera1.option_slider_zoom.setValue(cctv[0]['zoom'])
+        #self.camera_window.controlpanel.panel_camera1.option_slider_preset.setValue(cctv[0]['preset'])
        
         # VRI 
         # {id, available_state, error_state, state}
         vri = self.data.vri_state
+        print(vri)
         self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri[0]['state'])
         self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri[0]['available_state'])
         self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri[0]['error_state'])
@@ -128,6 +132,7 @@ class mainwindow(QWidget):
         # BARRIER 
         # {id, state, available_state, movement_state, obstacle_state, error_state}
         barrier = self.data.barrier_state
+        print(barrier)
         status_barrier = barrier[0]['state']
         self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier[0]['state'])
         if status_barrier == "up":
@@ -142,7 +147,8 @@ class mainwindow(QWidget):
         # MATRIX 
         # {id, state, available_state, flashing_state, error_state}
         matrix = self.data.msi_state
-        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'], matrix[0]["flasing_state"])
+        print(matrix)
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'], matrix[0]["flashing"])
 
         ##verkeerlischt
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.changeStoplichtStatus(self.data.vri_state[0]['state'])
@@ -165,6 +171,15 @@ class mainwindow(QWidget):
         #self.data.Control_CCTV(0,'change_zoom',self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
         print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
         #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+        print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 0:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Home&camera=1")
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 1:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Ingang&camera=1")
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 2:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Uitgang&camera=1")
+        if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 3:
+            requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Podium&camera=1")
 
     def connectVerlichtingBediening(self):
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.clicked.connect(self.setVerlichting)
@@ -180,27 +195,27 @@ class mainwindow(QWidget):
 
     def setStand(self):
         v1 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentText().replace('%', '')
-        self.data.Control_Lighting(0, str(int(v1)/10))
+        asyncio.run(self.data.Control_Lighting(0, str(int(v1)/10)))
         v2 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentText().replace('%', '')
-        self.data.Control_Lighting(1, str(int(v2)/10))
+        asyncio.run(self.data.Control_Lighting(1, str(int(v2)/10)))
         v3 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentText().replace('%', '')
-        self.data.Control_Lighting(2, str(int(v3)/10))
+        asyncio.run(self.data.Control_Lighting(2, str(int(v3)/10)))
         v4 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setStand.currentText().replace('%', '')
-        self.data.Control_Lighting(3, str(int(v4)/10))
+        asyncio.run(self.data.Control_Lighting(3, str(int(v4)/10)))
         v5 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setStand.currentText().replace('%', '')
-        self.data.Control_Lighting(4, str(int(v5)/10))
+        asyncio.run(self.data.Control_Lighting(4, str(int(v5)/10)))
 
     def setVerlichting(self):
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.isChecked():
-            self.data.Control_Lighting(0, 'auto')
+            asyncio.run(self.data.Control_Lighting(0, 'auto'))
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setAuto.isChecked():
-            self.data.Control_Lighting(1, 'auto')
+            asyncio.run(self.data.Control_Lighting(1, 'auto'))
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setAuto.isChecked():
-            self.data.Control_Lighting(2, 'auto')
+            asyncio.run(self.data.Control_Lighting(2, 'auto'))
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting4.setters.setAuto.isChecked():
-            self.data.Control_Lighting(3, 'auto')
+            asyncio.run(self.data.Control_Lighting(3, 'auto'))
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting5.setters.setAuto.isChecked():
-            self.data.Control_Lighting(4, 'auto')
+            asyncio.run(self.data.Control_Lighting(4, 'auto'))
 
     def connectPrimaireBediening(self):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.clicked.connect(self.openSlagboom)
@@ -213,7 +228,7 @@ class mainwindow(QWidget):
     def updateMatrix(self):
         list = ["off", "red_cross", "green_arrow", "arrow_left", "arrow_right", "end_limitation", "50", "60", "70", "80", "90", "100"]
         index = self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_status.currentIndex()
-        self.data.Control_MSI(0, list[index])
+        asyncio.run(self.data.Control_MSI(list[index]))
 
     def noodStop(self):
         pass
@@ -222,7 +237,7 @@ class mainwindow(QWidget):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.isChecked() == False:
             slagboomBarrier = self.data.barrier_state
             if slagboomBarrier[0] == "up":
-                self.data.Control_Barrier(0,'up')
+                asyncio.run(self.data.Control_Barrier(0,'up'))
                 self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(False)
                 self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(True)
         else:
@@ -235,7 +250,7 @@ class mainwindow(QWidget):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.isChecked() == False:
             slagboomBarrier = self.data.barrier_state
             if slagboomBarrier[0] == "down":
-                self.data.Control_Barrier(0,'down')
+                asyncio.run(self.data.Control_Barrier(0,'down'))
                 self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.slagboom_status.setText("Dicht")
                 self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.setEnabled(False)
                 self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_open.setEnabled(True)

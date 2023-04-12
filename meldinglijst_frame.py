@@ -17,7 +17,7 @@ class SystemenDetectiesDetailsWaardeLabel(QFrame):
         self.setLayout(self.layout) 
 
     def setWaarde(self, waarde):
-        self.waarde.setText(waarde)
+        self.waarde.setText(str(waarde))
 
 class VerlichtingSystemenDetectiesDetailsSet(QFrame):
     def __init__(self):
