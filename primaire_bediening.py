@@ -90,13 +90,13 @@ class Bedieningen(QFrame):
         self.layout.addItem(self.horizontalstretch)
 
     def changeStoplichtStatus(self, status):
-        if status == 0:
+        if status == 'red':
             self.stoplicht_status.setPixmap(QPixmap("icons/circle_red.svg").scaled(20,20))
             self.stoplicht_status.setText("")
-        if status == 1:
+        if status == 'yellow' or status == 'yellow_blinking':
             self.stoplicht_status.setPixmap(QPixmap("icons/circle_orange.svg").scaled(20,20))
             self.stoplicht_status.setText("")
-        if status == 2:
+        if status == 'off':
             self.stoplicht_status.setPixmap(QPixmap().scaled(20,20))
             self.stoplicht_status.setText("Uit")
             #self.stoplicht_status.setPixmap(QPixmap("icons/circle.svg").scaled(20,20))
