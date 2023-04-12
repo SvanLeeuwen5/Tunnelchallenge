@@ -31,7 +31,7 @@ class DataParser:
         control_command = {"id": id ,"action": "command", "lfv": "cctv", "command": command, "new_value": value}
         return self.ResponseIsSuccesful(await self.send_command(control_command))
 
-    # command (string): auto 0 1 2 3 4 5 6 7 8 9 19     id (int): 0 1 2 3 4 5 6 
+    # command (string): auto 0 1 2 3 4 5 6 7 8 9 10     id (int): 0 1 2 3 4 5 6 
     async def Control_Lighting(self, id, command):
         control_command = {"id": id, "action": "command", "lfv": "lights", "command": command}
         return self.ResponseIsSuccesful(await self.send_command(control_command))

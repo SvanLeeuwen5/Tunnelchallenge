@@ -88,6 +88,7 @@ class mainwindow(QWidget):
         # VERLICHTING 
         # {id, level, capacity, energy_usage, light_hours}
         verlichting = self.data.lighting_state
+        print(verlichting)
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.niveau.setWaarde(verlichting[0]['level'])
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.capaciteit.setWaarde(verlichting[0]['capacity'])
         self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.energieverbruik.setWaarde(verlichting[0]['energy_usage'])
@@ -124,7 +125,6 @@ class mainwindow(QWidget):
         # VRI 
         # {id, available_state, error_state, state}
         vri = self.data.vri_state
-        print(vri)
         self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.state.setWaarde(vri[0]['state'])
         self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.beschikbaarheid.setWaarde(vri[0]['available_state'])
         self.dashboard_window.systemen_detecties.rijbaan1.verkeerslicht_details.error.setWaarde(vri[0]['error_state'])
@@ -132,7 +132,6 @@ class mainwindow(QWidget):
         # BARRIER 
         # {id, state, available_state, movement_state, obstacle_state, error_state}
         barrier = self.data.barrier_state
-        print(barrier)
         status_barrier = barrier[0]['state']
         self.dashboard_window.systemen_detecties.rijbaan1.slagboom_details.state.setWaarde(barrier[0]['state'])
         if status_barrier == "up":
@@ -147,7 +146,6 @@ class mainwindow(QWidget):
         # MATRIX 
         # {id, state, available_state, flashing_state, error_state}
         matrix = self.data.msi_state
-        print(matrix)
         self.dashboard_window.overzichts_plattegrond.matrix.matrixbord.setStatus(matrix[0]['state'], matrix[0]["flashing"])
 
         ##verkeerlischt
@@ -163,15 +161,11 @@ class mainwindow(QWidget):
         self.camera_window.controlpanel.panel_camera1.confirm_button.clicked.connect(self.changeCamera)
 
     def changeCamera(self):
-        print(self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
-        #self.data.Control_CCTV(0,'change_pan',self.camera_window.controlpanel.panel_camera1.option_slider_pan.value())
-        print(self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value())
-        #self.data.Control_CCTV(0,'change_tilt',self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value())
-        print(self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
-        #self.data.Control_CCTV(0,'change_zoom',self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value())
-        print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
-        #self.data.Control_CCTV(0,'change_preset',self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
-        print(self.camera_window.controlpanel.panel_camera1.option_slider_preset.value())
+
+        asyncio.run(self.data.Control_CCTV(0,'pan',self.camera_window.controlpanel.panel_camera1.option_slider_pan.value()))
+        asyncio.run(self.data.Control_CCTV(0,'tilt',self.camera_window.controlpanel.panel_camera1.option_slider_tilt.value()))
+        asyncio.run(self.data.Control_CCTV(0,'zoom',self.camera_window.controlpanel.panel_camera1.option_slider_zoom.value()))
+
         if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 0:
             requests.get("http://192.168.10.199/axis-cgi/com/ptz.cgi?gotoserverpresetname=Home&camera=1")
         if self.camera_window.controlpanel.panel_camera1.option_slider_preset.value() == 1:
@@ -195,7 +189,8 @@ class mainwindow(QWidget):
 
     def setStand(self):
         v1 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentText().replace('%', '')
-        asyncio.run(self.data.Control_Lighting(0, str(int(v1)/10)))
+        print(str(int(v1)/10))
+        asyncio.run(self.data.Control_Lighting(0, '4'))
         v2 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setStand.currentText().replace('%', '')
         asyncio.run(self.data.Control_Lighting(1, str(int(v2)/10)))
         v3 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setStand.currentText().replace('%', '')
@@ -208,6 +203,9 @@ class mainwindow(QWidget):
     def setVerlichting(self):
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setAuto.isChecked():
             asyncio.run(self.data.Control_Lighting(0, 'auto'))
+        else:
+            v1 = self.dashboard_window.melding_lijst.tabel_lijst.verlichting1.setters.setStand.currentText().replace('%', '')
+            asyncio.run(self.data.Control_Lighting(0, str(int(v1)/10)))
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting2.setters.setAuto.isChecked():
             asyncio.run(self.data.Control_Lighting(1, 'auto'))
         if self.dashboard_window.melding_lijst.tabel_lijst.verlichting3.setters.setAuto.isChecked():
@@ -224,11 +222,18 @@ class mainwindow(QWidget):
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.rijbaan_status.currentIndexChanged.connect(self.changeTunnelState)
         self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndexChanged.connect(self.changeStoplichtState)
         self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_status.currentIndexChanged.connect(self.updateMatrix)
+        self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_flashStatus.currentIndexChanged.connect(self.updateFlash)
 
     def updateMatrix(self):
         list = ["off", "red_cross", "green_arrow", "arrow_left", "arrow_right", "end_limitation", "50", "60", "70", "80", "90", "100"]
         index = self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_status.currentIndex()
         asyncio.run(self.data.Control_MSI(list[index]))
+
+    def updateFlash(self):
+        list = ["off", "on"]
+        index = self.dashboard_window.overzichts_plattegrond.matrix.matrixBesturing.matrix_flashStatus.currentIndex()
+        asyncio.run(self.data.Control_MSI(list[index]))
+
 
     def noodStop(self):
         pass
