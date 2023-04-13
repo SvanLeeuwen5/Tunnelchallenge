@@ -161,8 +161,6 @@ class mainwindow(QWidget):
 
         if self.data.calamity_state[0]['calamity']:
             self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.noodstop.setChecked(True) 
-        else:
-            self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.noodstop.setChecked(False)
 
     def connectCameraSliders(self):
         self.camera_window.controlpanel.panel_camera1.confirm_button.clicked.connect(self.changeCamera)
@@ -243,6 +241,7 @@ class mainwindow(QWidget):
     def noodStop(self):
         asyncio.run(self.data.Control_Calamity("emergency_off"))
 
+
     def openSlagboom(self):
         if self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.button_close.isChecked() == False:
             slagboomBarrier = self.data.barrier_state
@@ -276,8 +275,10 @@ class mainwindow(QWidget):
 
     def changeStoplichtState(self):
         index = self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.stoplicht.currentIndex()
-        self.dashboard_window.primaire_bediening.rijbaan1Bediening.bedieningsknoppen.changeStoplichtStatus(index)
-        print(index)
+        if index == 1:
+            asyncio.run(self.data.Control_VRI(0,'off'))
+        else:
+            asyncio.run(self.data.Control_VRI(0,'red'))
         
 if __name__ == '__main__':
     app = QApplication([])
